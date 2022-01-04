@@ -1,0 +1,42 @@
+{
+  "name": "maxonfjvipon/purple",
+  "license": [
+    "MIT"
+  ],
+  "authors": [
+    {
+      "name": "Max Trunnikov",
+      "email": "mtrunnikov@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=8.0",
+    "ext-json": "*",
+    "maxonfjvipon/elegant-elephant": "dev-main"
+  },
+  "require-dev": {
+    "ext-simplexml": "*",
+    "php-coveralls/php-coveralls": "^2.4",
+    "phpstan/phpstan": "^0.12.64",
+    "phpstan/phpstan-phpunit": "^0.12.17",
+    "phpunit/phpunit": "^9.5",
+    "roave/security-advisories": "dev-latest"
+  },
+  "autoload": {
+    "psr-4": {
+      "Purple\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Purple\\Tests\\": "tests"
+    }
+  },
+  "config": {
+    "preferred-install": {
+      "*": "dist"
+    },
+    "sort-packages": true,
+    "optimize-autoloader": true
+  }
+}

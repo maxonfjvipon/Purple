@@ -4,7 +4,7 @@ use PHPUnit\Framework\TestCase;
 use Purple\Frame\FrRoute\FrRoute;
 use Purple\Http\KrBasic;
 use Purple\Resources\Frame\FrIndex;
-use Purple\Route\RtRegex\RtRegexOfString;
+use Purple\Route\RtRegex\RtRegex;
 
 class SomeTest extends TestCase
 {
@@ -12,7 +12,7 @@ class SomeTest extends TestCase
     {
         (new KrBasic(
             new FrRoute(
-                new RtRegexOfString(
+                new RtRegex(
                     "/",
                     new FrIndex()
                 )

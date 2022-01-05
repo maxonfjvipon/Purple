@@ -7,7 +7,8 @@ use Purple\Request\RqLive;
 use Purple\Response\RsHtml;
 
 /**
- * Class KrBasic
+ * Basic kernel
+ *
  * @package Purple\Http
  */
 final class KrBasic implements Kernel
@@ -24,7 +25,6 @@ final class KrBasic implements Kernel
         $request = new RqLive(); // request - need to construct from $_GET, $_POST, etc...
         $response = $this->frame->handle($request); // response - made from frame
         $rsAsHtml = (new RsHtml($response))->asString();
-        var_dump($rsAsHtml);
         echo $rsAsHtml;
     }
 }

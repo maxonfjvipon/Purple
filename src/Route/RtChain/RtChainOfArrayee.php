@@ -5,13 +5,18 @@ namespace Purple\Route\RtChain;
 
 
 use ElegantBro\Interfaces\Arrayee;
+use Exception;
 
+/**
+ * Chain route of {@ElegantBro\Interfaces\Arrayee}
+ * @package Purple\Route\RtChain
+ */
 class RtChainOfArrayee extends RtChain
 {
     /**
-     * RtChainOfArrayee constructor.
+     * Ctor.
      * @param Arrayee $rts
-     * @throws \Exception
+     * @throws Exception
      */
     public function __construct(Arrayee $rts)
     {

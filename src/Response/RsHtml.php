@@ -5,7 +5,6 @@ namespace Purple\Response;
 
 
 use ElegantBro\Interfaces\Stringify;
-use Purple\Response;
 
 class RsHtml extends RsPack implements Stringify
 {
@@ -14,6 +13,6 @@ class RsHtml extends RsPack implements Stringify
      */
     public function asString(): string
     {
-        return "<div>Hello world</div>\n\r";
+        return '<html lang="ru"><head><title>somebody</title></head><body><div>Hello world</div></body></html>' . "\n\r";
     }
 }

@@ -8,15 +8,18 @@ use ElegantBro\Interfaces\Arrayee;
 use Purple\Request;
 
 /**
- * Class RqPack
+ * Packed request
  * @package Purple\Request
  */
 class RqPack implements Request
 {
+    /**
+     * @var Request $origin
+     */
     private Request $origin;
 
     /**
-     * RqPack constructor.
+     * Ctor.
      * @param Request $req
      */
     public function __construct(Request $req)

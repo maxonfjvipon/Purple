@@ -8,10 +8,21 @@ use Purple\Request;
 use Purple\Response;
 use Purple\Route\Route;
 
+/**
+ * Chain route
+ * @package Purple\Route\RtChain
+ */
 class RtChain implements Route
 {
+    /**
+     * @var Route[] routes
+     */
     private array $routes;
 
+    /**
+     * Ctor.
+     * @param Route ...$rts
+     */
     public function __construct(Route ...$rts)
     {
         $this->routes = $rts;

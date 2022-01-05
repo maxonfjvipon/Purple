@@ -3,6 +3,7 @@
 
 namespace Purple\Request;
 
+use JetBrains\PhpStorm\Pure;
 use Purple\Request;
 
 /**
@@ -11,7 +12,10 @@ use Purple\Request;
  */
 class RqLive extends RqPack
 {
-    public function __construct()
+    /**
+     * Ctor.
+     */
+    #[Pure] public function __construct()
     {
         parent::__construct(new RqEmpty());
     }

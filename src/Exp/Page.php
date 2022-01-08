@@ -13,15 +13,15 @@ interface Page
      *
      * @param string $key
      * @param string $value
-     * @return Page
+     * @return PagePack
      */
-    public function by(string $key, string $value): Page;
+    public function by(string $key, string $value): PagePack;
 
     /**
      * Write yourself to the $output
      *
-     * @param Response $output
+     * @param Response $response
      * @return Response
      */
-    public function via(Response $output): Response;
+    public function via(Response $response): Response;
 }

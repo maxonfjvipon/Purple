@@ -6,7 +6,10 @@ namespace Purple\Exp\Page\PageWith;
 
 use ElegantBro\Stringify\Just;
 use Exception;
+use JetBrains\PhpStorm\Pure;
 use Maxonfjvipon\Elegant_Elephant\Numeric\LengthOfStingify;
+use Purple\Exp\PagePack;
+use Purple\Exp\PagePack\PagePackSimple;
 use Purple\Exp\Response;
 use Purple\Exp\Page;
 
@@ -23,19 +26,19 @@ class PageWithContentLengthOf implements Page
         $this->body = $bdy;
     }
 
-    public function by(string $key, string $value): Page
+    #[Pure] public function by(string $key, string $value): PagePack
     {
-        return $this;
+        return new PagePackSimple($this);
     }
 
     /**
-     * @param Response $output
+     * @param Response $response
      * @return Response
      * @throws Exception
      */
-    public function via(Response $output): Response
+    public function via(Response $response): Response
     {
-        return $output->with(
+        return $response->with(
             'Content-Length',
             (new LengthOfStingify(new Just($this->body)))
                 ->asNumber()

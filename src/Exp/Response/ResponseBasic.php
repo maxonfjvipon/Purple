@@ -4,7 +4,7 @@ namespace Purple\Exp\Response;
 
 use Purple\Exp\Response;
 
-final class BaseResponse implements Response
+final class ResponseBasic implements Response
 {
     private int $status;
 
@@ -12,7 +12,7 @@ final class BaseResponse implements Response
 
     private string $body;
 
-    public function __construct(int $stts = 200, array $hdrs = [], $bd = "")
+    public function __construct(int $stts = 404, array $hdrs = [], $bd = "")
     {
         $this->status = $stts;
         $this->headers = $hdrs;

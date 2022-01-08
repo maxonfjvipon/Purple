@@ -12,7 +12,8 @@
   "require": {
     "php": ">=8.0",
     "ext-json": "*",
-    "maxonfjvipon/elegant-elephant": "dev-main"
+    "maxonfjvipon/elegant-elephant": "dev-main",
+    "ext-http": "*"
   },
   "require-dev": {
     "ext-simplexml": "*",

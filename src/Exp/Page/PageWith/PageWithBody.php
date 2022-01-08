@@ -3,6 +3,8 @@
 namespace Purple\Exp\Page\PageWith;
 
 use Exception;
+use JetBrains\PhpStorm\Pure;
+use Purple\Exp\PagePack;
 use Purple\Exp\Response;
 use Purple\Exp\Page;
 
@@ -25,18 +27,18 @@ class PageWithBody implements Page
     /**
      * @inheritDoc
      */
-    public function by(string $key, string $value): Page
+    #[Pure] public function by(string $key, string $value): PagePack
     {
-        return $this;
+        return new PagePack\PagePackSimple($this);
     }
 
     /**
      * @inheritDoc
      * @throws Exception
      */
-    public function via(Response $output): Response
+    public function via(Response $response): Response
     {
-        return $output->with('X-Body', $this->body);
+        return $response->with('X-Body', $this->body);
     }
 
 }

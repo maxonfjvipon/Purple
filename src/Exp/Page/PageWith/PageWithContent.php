@@ -3,6 +3,9 @@
 namespace Purple\Exp\Page\PageWith;
 
 use Exception;
+use JetBrains\PhpStorm\Pure;
+use Purple\Exp\PagePack;
+use Purple\Exp\PagePack\PagePackSimple;
 use Purple\Exp\Response;
 use Purple\Exp\Page;
 
@@ -36,19 +39,19 @@ class PageWithContent implements Page
     /**
      * @inheritDoc
      */
-    public function by(string $key, string $value): Page
+    #[Pure] public function by(string $key, string $value): PagePack
     {
-        return $this;
+        return new PagePackSimple($this);
     }
 
     /**
      * @inheritDoc
      * @throws Exception
      */
-    public function via(Response $output): Response
+    public function via(Response $response): Response
     {
         return (new PageWithContentType($this->contentType))
             ->via((new PageWithContentLengthOf($this->body))
-                ->via($output));
+                ->via($response));
     }
 }

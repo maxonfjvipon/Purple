@@ -3,6 +3,9 @@
 namespace Purple\Exp\Page;
 
 use Exception;
+use JetBrains\PhpStorm\Pure;
+use Purple\Exp\PagePack;
+use Purple\Exp\PagePack\PagePackSimple;
 use Purple\Exp\Response;
 use Purple\Exp\Page;
 
@@ -25,22 +28,22 @@ class HtmlPage implements Page
     /**
      * @param string $key
      * @param string $value
-     * @return Page
+     * @return PagePack
      */
-    public function by(string $key, string $value): Page
+    #[Pure] public function by(string $key, string $value): PagePack
     {
-        return $this;
+        return new PagePackSimple($this);
     }
 
     /**
-     * @param Response $output
+     * @param Response $response
      * @return Response
      * @throws Exception
      */
-    public function via(Response $output): Response
+    public function via(Response $response): Response
     {
         return (new PageWith\PageWithBody($this->body))
             ->via((new Page\PageWith\PageWithContent($this->body, 'text/html'))
-                ->via($output));
+                ->via($response));
     }
 }

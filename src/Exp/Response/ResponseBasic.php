@@ -12,7 +12,7 @@ final class ResponseBasic implements Response
 
     private string $body;
 
-    public function __construct(int $stts = 404, array $hdrs = [], $bd = "")
+    public function __construct(int $stts = 200, array $hdrs = [], $bd = "")
     {
         $this->status = $stts;
         $this->headers = $hdrs;

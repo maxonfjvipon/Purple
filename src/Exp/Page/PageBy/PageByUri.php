@@ -24,6 +24,11 @@ final class PageByUri implements Page
     private Page $origin;
 
     /**
+     * @var string $key
+     */
+    private string $key = 'REQUEST_URI';
+
+    /**
      * Ctor.
      * @param string $path
      * @param Page $page
@@ -37,12 +42,11 @@ final class PageByUri implements Page
     /**
      * @inheritDoc
      */
-    #[Pure] public function by(string $key, string $value): PagePack
+    public function handle(): PagePack
     {
-        if ($key === 'REQUEST_URI' && $value === $this->uri) {
-            return new PagePack\PagePackSimple($this->origin);
-        }
-        return new PagePack\PagePackEmpty();
+        return (isset($_SERVER[$this->key]) && $_SERVER[$this->key] === $this->uri)
+            ? $this->origin->handle()
+            : new PagePack\PagePackEmpty();
     }
 
     /**

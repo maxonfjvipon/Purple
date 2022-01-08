@@ -13,7 +13,7 @@ use Purple\Exp\Page;
  * Page that print itself to output with Content-Length and Content-Type headers
  * @package Purple\Exp\Page\PageVia
  */
-class PageWithContent implements Page
+final class PageWithContent implements Page
 {
     /**
      * @var string $body
@@ -39,7 +39,7 @@ class PageWithContent implements Page
     /**
      * @inheritDoc
      */
-    #[Pure] public function by(string $key, string $value): PagePack
+    #[Pure] public function handle(): PagePack
     {
         return new PagePackSimple($this);
     }

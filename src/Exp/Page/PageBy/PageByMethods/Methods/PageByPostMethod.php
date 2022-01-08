@@ -12,7 +12,7 @@ use Purple\Exp\Response;
  * Page by POST method
  * @package Purple\Exp\Page\PageBy\PageByMethods
  */
-class PageByPostMethod implements Page
+final class PageByPostMethod implements Page
 {
     /**
      * @var Page $origin
@@ -31,9 +31,9 @@ class PageByPostMethod implements Page
     /**
      * @inheritDoc
      */
-    public function by(string $key, string $value): PagePack
+    public function handle(): PagePack
     {
-        return $this->origin->by($key, $value);
+        return $this->origin->handle();
     }
 
     /**

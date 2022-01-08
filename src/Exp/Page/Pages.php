@@ -32,11 +32,11 @@ final class Pages implements Page
      * @inheritDoc
      * @throws Exception
      */
-    public function by(string $key, string $value): PagePack
+    public function handle(): PagePack
     {
         $target = new PagePack\PagePackEmpty();
         foreach ($this->pages as $page) {
-            $current = $page->by($key, $value);
+            $current = $page->handle();
             if ($current->has()) {
                 $target = $current;
                 break;
@@ -46,6 +46,7 @@ final class Pages implements Page
     }
 
     /**
+     * Should never happen...
      * @inheritDoc
      * @throws HttpException
      */

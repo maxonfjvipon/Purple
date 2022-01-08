@@ -12,7 +12,7 @@ use Purple\Exp\Page;
  * Page that print itself to output with Content-Type header
  * @package Purple\Exp\Page\PageVia
  */
-class PageWithContentType implements Page
+final class PageWithContentType implements Page
 {
     /**
      * @var string $contentType
@@ -38,7 +38,7 @@ class PageWithContentType implements Page
     /**
      * @inheritDoc
      */
-    #[Pure] public function by(string $key, string $value): PagePack
+    #[Pure] public function handle(): PagePack
     {
         return new PagePackSimple($this);
     }

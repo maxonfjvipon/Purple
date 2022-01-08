@@ -9,13 +9,11 @@ namespace Purple\Exp;
 interface Page
 {
     /**
-     * Refine yourself
+     * Handle request
      *
-     * @param string $key
-     * @param string $value
      * @return PagePack
      */
-    public function by(string $key, string $value): PagePack;
+    public function handle(): PagePack;
 
     /**
      * Write yourself to the $output

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Purple\Exp\Page\PageBy\PageByMethods\Methods;
-
 
 use JetBrains\PhpStorm\Pure;
 use Purple\Exp\Page;
@@ -14,7 +12,7 @@ use Purple\Exp\Response;
  * Page by GET method
  * @package Purple\Exp\Page\PageBy
  */
-class PageByGetMethod implements Page
+final class PageByGetMethod implements Page
 {
     /**
      * @var Page $origin
@@ -33,9 +31,9 @@ class PageByGetMethod implements Page
     /**
      * @inheritDoc
      */
-    public function by(string $key, string $value): PagePack
+    public function handle(): PagePack
     {
-        return $this->origin->by($key, $value);
+        return $this->origin->handle();
     }
 
     /**

@@ -8,7 +8,7 @@ use Purple\Exp\Page;
  * Page by methods that presented as string
  * @package Purple\Exp\Page\PageBy
  */
-class PageByMethodsAsString extends PageByMethods
+final class PageByMethodsAsString extends PageByMethods
 {
     public function __construct(string $methods, Page $page)
     {

@@ -17,7 +17,7 @@ use Purple\Exp\Page;
  * Page that print itself to output with Content-Length header
  * @package Purple\Exp\Page\PageVia
  */
-class PageWithContentLengthOf implements Page
+final class PageWithContentLengthOf implements Page
 {
     private string $body;
 
@@ -26,7 +26,7 @@ class PageWithContentLengthOf implements Page
         $this->body = $bdy;
     }
 
-    #[Pure] public function by(string $key, string $value): PagePack
+    #[Pure] public function handle(): PagePack
     {
         return new PagePackSimple($this);
     }

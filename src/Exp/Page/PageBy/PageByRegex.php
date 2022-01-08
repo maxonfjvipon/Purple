@@ -1,21 +1,21 @@
 <?php
 
-namespace Purple\Exp\Page\PageBy\PageByMethods;
+namespace Purple\Exp\Page\PageBy;
 
 use Purple\Exp\Page;
 use Purple\Exp\PagePack;
 use Purple\Exp\Response;
 
 /**
- * Page by methods.
+ * Page by request regex.
  * @package Purple\Exp\Page\PageBy
  */
-final class PageByMethods implements Page
+final class PageByRegex implements Page
 {
     /**
-     * @var array $methods
+     * @var string $pattern
      */
-    private array $methods;
+    private string $pattern;
 
     /**
      * @var Page $origin
@@ -25,16 +25,16 @@ final class PageByMethods implements Page
     /**
      * @var string $key
      */
-    private string $key = 'REQUEST_METHOD';
+    private string $key = 'REQUEST_URI';
 
     /**
      * Ctor.
-     * @param array $mthds
+     * @param string $regex
      * @param Page $page
      */
-    public function __construct(array $mthds, Page $page)
+    public function __construct(string $regex, Page $page)
     {
-        $this->methods = $mthds;
+        $this->pattern = $regex;
         $this->origin = $page;
     }
 
@@ -43,7 +43,7 @@ final class PageByMethods implements Page
      */
     public function handle(): PagePack
     {
-        return (isset($_SERVER[$this->key]) && in_array($_SERVER[$this->key], $this->methods))
+        return (isset($_SERVER[$this->key]) && preg_match($this->pattern, $_SERVER[$this->key]))
             ? $this->origin->handle()
             : new PagePack\PagePackEmpty();
     }
@@ -51,8 +51,7 @@ final class PageByMethods implements Page
     /**
      * @inheritDoc
      */
-    public
-    function via(Response $response): Response
+    public function via(Response $response): Response
     {
         return $this->origin->via($response);
     }

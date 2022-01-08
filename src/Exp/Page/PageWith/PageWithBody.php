@@ -8,7 +8,7 @@ use Purple\Exp\PagePack;
 use Purple\Exp\Response;
 use Purple\Exp\Page;
 
-class PageWithBody implements Page
+final class PageWithBody implements Page
 {
     /**
      * @var string $body
@@ -27,7 +27,7 @@ class PageWithBody implements Page
     /**
      * @inheritDoc
      */
-    #[Pure] public function by(string $key, string $value): PagePack
+    #[Pure] public function handle(): PagePack
     {
         return new PagePack\PagePackSimple($this);
     }

@@ -9,7 +9,7 @@ use Purple\Exp\PagePack;
 use Purple\Exp\PagePack\PagePackSimple;
 use Purple\Exp\Response;
 
-class TextPage implements Page
+final class TextPage implements Page
 {
     /**
      * @var string body
@@ -26,11 +26,9 @@ class TextPage implements Page
     }
 
     /**
-     * @param string $key
-     * @param string $value
      * @return PagePack
      */
-    #[Pure] public function by(string $key, string $value): PagePack
+    #[Pure] public function handle(): PagePack
     {
         return new PagePackSimple($this);
     }

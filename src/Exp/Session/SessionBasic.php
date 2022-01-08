@@ -55,13 +55,9 @@ final class SessionBasic implements Session
      */
     private function target(): Page
     {
-        foreach ($this->keys as $key) {
-            if (array_key_exists($key, $_SERVER)) {
-                $target = $this->page->by($key, $_SERVER[$key]);
-                if ($target->has()) {
-                    return $target->origin();
-                }
-            }
+        $target = $this->page->handle();
+        if ($target->has()) {
+            return $target->origin();
         }
         throw new HttpException("Not found", 404);
     }

@@ -2,10 +2,23 @@
 
 namespace Purple;
 
+use Exception;
+
 /**
- * Interface Response
+ * The output.
  * @package Purple
  */
-interface Response extends Head, Body
+interface Response
 {
+    /**
+     * @param string $name
+     * @param string $value
+     * @return Response
+     */
+    public function with(string $name, string $value): Response;
+
+    /**
+     * @throws Exception
+     */
+    public function send(): void;
 }

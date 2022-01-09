@@ -4,6 +4,7 @@ namespace Purple\Page\PageBy;
 
 use JetBrains\PhpStorm\Pure;
 use Purple\PagePack;
+use Purple\PagePack\PagePackEmpty;
 use Purple\Response;
 use Purple\Page;
 
@@ -29,11 +30,22 @@ final class PageByUri implements Page
     private string $key = 'REQUEST_URI';
 
     /**
+     * Ctor wrap.
+     * @param string $path
+     * @param Page $page
+     * @return PageByUri
+     */
+    #[Pure] public static function new(string $path, Page $page): PageByUri
+    {
+        return new self($path, $page);
+    }
+
+    /**
      * Ctor.
      * @param string $path
      * @param Page $page
      */
-    public function __construct(string $path, Page $page)
+    private function __construct(string $path, Page $page)
     {
         $this->uri = $path;
         $this->origin = $page;
@@ -46,7 +58,7 @@ final class PageByUri implements Page
     {
         return (isset($_SERVER[$this->key]) && $_SERVER[$this->key] === $this->uri)
             ? $this->origin->handle()
-            : new PagePack\PagePackEmpty();
+            : PagePackEmpty::new();
     }
 
     /**

@@ -20,12 +20,22 @@ final class PageByPostMethod implements Page
     private Page $origin;
 
     /**
+     * Ctor wrap.
+     * @param Page $page
+     * @return PageByPostMethod
+     */
+    #[Pure] public static function new(Page $page): PageByPostMethod
+    {
+        return new self($page);
+    }
+
+    /**
      * Ctor.
      * @param Page $page
      */
     #[Pure] public function __construct(Page $page)
     {
-        $this->origin = new PageByMethods(['POST'], $page);
+        $this->origin = PageByMethods::new(['POST'], $page);
     }
 
     /**

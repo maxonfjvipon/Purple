@@ -20,12 +20,22 @@ final class PageByGetMethod implements Page
     private Page $origin;
 
     /**
+     * Ctor wrap.
+     * @param Page $page
+     * @return PageByGetMethod
+     */
+    #[Pure] public static function new(Page $page): PageByGetMethod
+    {
+        return new self($page);
+    }
+
+    /**
      * Ctor.
      * @param Page $page
      */
-    #[Pure] public function __construct(Page $page)
+    #[Pure] private function __construct(Page $page)
     {
-        $this->origin = new PageByMethods(['GET'], $page);
+        $this->origin = PageByMethods::new(['GET'], $page);
     }
 
     /**

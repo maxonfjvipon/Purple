@@ -26,11 +26,22 @@ final class PageWithContent implements Page
     private string $contentType;
 
     /**
+     * Ctor wrap.
+     * @param string $body
+     * @param string $ctype
+     * @return PageWithContent
+     */
+    #[Pure] public static function new(string $body, string $ctype): PageWithContent
+    {
+        return new self($body, $ctype);
+    }
+
+    /**
      * Ctor.
      * @param string $bdy
      * @param string $ctype
      */
-    public function __construct(string $bdy, string $ctype)
+    private function __construct(string $bdy, string $ctype)
     {
         $this->body = $bdy;
         $this->contentType = $ctype;
@@ -41,7 +52,7 @@ final class PageWithContent implements Page
      */
     #[Pure] public function handle(): PagePack
     {
-        return new PagePackSimple($this);
+        return PagePackSimple::new($this);
     }
 
     /**
@@ -50,8 +61,8 @@ final class PageWithContent implements Page
      */
     public function via(Response $response): Response
     {
-        return (new PageWithContentType($this->contentType))
-            ->via((new PageWithContentLengthOf($this->body))
+        return PageWithContentType::new($this->contentType)
+            ->via(PageWithContentLengthOf::new($this->body)
                 ->via($response));
     }
 }

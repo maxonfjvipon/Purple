@@ -12,6 +12,23 @@ use Purple\PagePack;
  */
 final class PagePackEmpty implements PagePack
 {
+
+    /**
+     * Ctor wrap.
+     * @return PagePackEmpty
+     */
+    public static function new(): PagePackEmpty
+    {
+        return new self();
+    }
+
+    /**
+     * Ctor.
+     */
+    private function __construct()
+    {
+    }
+
     /**
      * @return Page
      * @throws Exception

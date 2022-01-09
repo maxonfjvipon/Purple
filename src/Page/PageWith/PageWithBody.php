@@ -16,10 +16,20 @@ final class PageWithBody implements Page
     private string $body;
 
     /**
+     * Ctor wrap.
+     * @param string $body
+     * @return PageWithBody
+     */
+    #[Pure] public static function new(string $body): PageWithBody
+    {
+        return new self($body);
+    }
+
+    /**
      * Ctor.
      * @param string $bdy
      */
-    public function __construct(string $bdy)
+    private function __construct(string $bdy)
     {
         $this->body = $bdy;
     }
@@ -29,7 +39,7 @@ final class PageWithBody implements Page
      */
     #[Pure] public function handle(): PagePack
     {
-        return new PagePack\PagePackSimple($this);
+        return PagePack\PagePackSimple::new($this);
     }
 
     /**

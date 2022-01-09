@@ -19,21 +19,41 @@ use Purple\Page;
  */
 final class PageWithContentLengthOf implements Page
 {
+    /**
+     * @var string $body
+     */
     private string $body;
 
-    public function __construct(string $bdy)
+    /**
+     * Ctor wrap.
+     * @param string $body
+     * @return PageWithContentLengthOf
+     */
+    #[Pure] public static function new(string $body): PageWithContentLengthOf
+    {
+        return new self($body);
+    }
+
+    /**
+     * Ctor.
+     * PageWithContentLengthOf constructor.
+     * @param string $bdy
+     */
+    private function __construct(string $bdy)
     {
         $this->body = $bdy;
     }
 
+    /**
+     * @inheritDoc
+     */
     #[Pure] public function handle(): PagePack
     {
-        return new PagePackSimple($this);
+        return PagePackSimple::new($this);
     }
 
     /**
-     * @param Response $response
-     * @return Response
+     * @inheritDoc
      * @throws Exception
      */
     public function via(Response $response): Response

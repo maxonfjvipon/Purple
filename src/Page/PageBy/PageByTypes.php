@@ -2,8 +2,10 @@
 
 namespace Purple\Page\PageBy;
 
+use JetBrains\PhpStorm\Pure;
 use Purple\Page;
 use Purple\PagePack;
+use Purple\PagePack\PagePackEmpty;
 use Purple\Response;
 
 /**
@@ -28,11 +30,22 @@ class PageByTypes implements Page
     private string $key = 'HTTP_ACCEPT';
 
     /**
+     * Ctor wrap.
+     * @param array $types
+     * @param Page $page
+     * @return PageByTypes
+     */
+    #[Pure] public static function new(array $types, Page $page): PageByTypes
+    {
+        return new self($types, $page);
+    }
+
+    /**
      * Ctor.
      * @param array $tps
      * @param Page $page
      */
-    public function __construct(array $tps, Page $page)
+    private function __construct(array $tps, Page $page)
     {
         $this->types = $tps;
         $this->origin = $page;
@@ -46,7 +59,7 @@ class PageByTypes implements Page
     {
         return isset($_SERVER[$this->key])
             ? $this->origin->handle()
-            : new PagePack\PagePackEmpty();
+            : PagePackEmpty::new();
     }
 
     /**

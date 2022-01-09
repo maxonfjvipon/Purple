@@ -17,10 +17,21 @@ final class TextPage implements Page
     private string $body;
 
     /**
+     * Ctor wrap.
+     *
+     * @param string $body
+     * @return TextPage
+     */
+    #[Pure] public static function new(string $body): TextPage
+    {
+        return new self($body);
+    }
+
+    /**
      * Ctor.
      * @param string $bdy
      */
-    public function __construct(string $bdy)
+    private function __construct(string $bdy)
     {
         $this->body = $bdy;
     }
@@ -30,7 +41,7 @@ final class TextPage implements Page
      */
     #[Pure] public function handle(): PagePack
     {
-        return new PagePackSimple($this);
+        return PagePackSimple::new($this);
     }
 
     /**
@@ -40,8 +51,8 @@ final class TextPage implements Page
      */
     public function via(Response $response): Response
     {
-        return (new PageWith\PageWithBody($this->body))
-            ->via((new Page\PageWith\PageWithContent($this->body, 'text/plain'))
+        return Page\PageWith\PageWithBody::new($this->body)
+            ->via(Page\PageWith\PageWithContent::new($this->body, 'text/plain')
                 ->via($response));
     }
 }

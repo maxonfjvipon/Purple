@@ -2,6 +2,7 @@
 
 namespace Purple\PagePack;
 
+use JetBrains\PhpStorm\Pure;
 use Purple\Page;
 use Purple\PagePack;
 
@@ -17,10 +18,21 @@ final class PagePackSimple implements PagePack
     private Page $origin;
 
     /**
+     * Ctor wrap.
+     *
+     * @param Page $page
+     * @return PagePackSimple
+     */
+    #[Pure] public static function new(Page $page): PagePackSimple
+    {
+        return new self($page);
+    }
+
+    /**
      * Ctor.
      * @param Page $orgn
      */
-    public function __construct(Page $orgn)
+    private function __construct(Page $orgn)
     {
         $this->origin = $orgn;
     }

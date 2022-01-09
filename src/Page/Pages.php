@@ -4,6 +4,7 @@ namespace Purple\Page;
 
 use Exception;
 use HttpException;
+use JetBrains\PhpStorm\Pure;
 use Purple\Page;
 use Purple\PagePack;
 use Purple\Response;
@@ -19,11 +20,16 @@ final class Pages implements Page
      */
     private array $pages;
 
+    #[Pure] public static function new(Page ...$pages): Pages
+    {
+        return new self($pages);
+    }
+
     /**
      * Ctor.
      * @param Page ...$pgs
      */
-    public function __construct(Page ...$pgs)
+    private function __construct(Page ...$pgs)
     {
         $this->pages = $pgs;
     }
@@ -34,7 +40,7 @@ final class Pages implements Page
      */
     public function handle(): PagePack
     {
-        $target = new PagePack\PagePackEmpty();
+        $target = PagePack\PagePackEmpty::new();
         foreach ($this->pages as $page) {
             $current = $page->handle();
             if ($current->has()) {

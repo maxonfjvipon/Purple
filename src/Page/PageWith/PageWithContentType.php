@@ -25,11 +25,22 @@ final class PageWithContentType implements Page
     private string $charset;
 
     /**
+     * Ctor wrap.
+     * @param string $ctype
+     * @param string $charset
+     * @return PageWithContentType
+     */
+    #[Pure] public static function new(string $ctype, string $charset = 'UTF-8'): PageWithContentType
+    {
+        return new self($ctype, $charset);
+    }
+
+    /**
      * Ctor.
      * @param string $ctype
      * @param string $chrst
      */
-    public function __construct(string $ctype, string $chrst = 'UTF-8')
+    private function __construct(string $ctype, string $chrst)
     {
         $this->contentType = $ctype;
         $this->charset = $chrst;
@@ -40,7 +51,7 @@ final class PageWithContentType implements Page
      */
     #[Pure] public function handle(): PagePack
     {
-        return new PagePackSimple($this);
+        return PagePackSimple::new($this);
     }
 
     /**

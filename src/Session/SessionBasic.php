@@ -4,6 +4,7 @@ namespace Purple\Session;
 
 use Exception;
 use HttpException;
+use JetBrains\PhpStorm\Pure;
 use Purple\Page;
 use Purple\Response\ResponseBasic;
 use Purple\Session;
@@ -31,11 +32,16 @@ final class SessionBasic implements Session
         'REQUEST_METHOD',
     ];
 
+    #[Pure] public static function new(Page $page): SessionBasic
+    {
+        return new self($page);
+    }
+
     /**
      * Ctor.
      * @param Page $pg
      */
-    public function __construct(Page $pg)
+    private function __construct(Page $pg)
     {
         $this->page = $pg;
     }
@@ -46,7 +52,7 @@ final class SessionBasic implements Session
      */
     public function process(): void
     {
-        $this->target()->via(new ResponseBasic())->send();
+        $this->target()->via(ResponseBasic::new())->send();
     }
 
     /**

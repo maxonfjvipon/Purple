@@ -2,8 +2,10 @@
 
 namespace Purple\Page\PageBy;
 
+use JetBrains\PhpStorm\Pure;
 use Purple\Page;
 use Purple\PagePack;
+use Purple\PagePack\PagePackEmpty;
 use Purple\Response;
 
 /**
@@ -28,11 +30,22 @@ final class PageByRegex implements Page
     private string $key = 'REQUEST_URI';
 
     /**
+     * Ctor wrap.
+     * @param string $regex
+     * @param Page $page
+     * @return PageByRegex
+     */
+    #[Pure] public static function new(string $regex, Page $page): PageByRegex
+    {
+        return new self($regex, $page);
+    }
+
+    /**
      * Ctor.
      * @param string $regex
      * @param Page $page
      */
-    public function __construct(string $regex, Page $page)
+    private function __construct(string $regex, Page $page)
     {
         $this->pattern = $regex;
         $this->origin = $page;
@@ -45,7 +58,7 @@ final class PageByRegex implements Page
     {
         return (isset($_SERVER[$this->key]) && preg_match($this->pattern, $_SERVER[$this->key]))
             ? $this->origin->handle()
-            : new PagePack\PagePackEmpty();
+            : PagePackEmpty::new();
     }
 
     /**

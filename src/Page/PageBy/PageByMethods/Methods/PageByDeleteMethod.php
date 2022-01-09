@@ -19,13 +19,24 @@ final class PageByDeleteMethod implements Page
      */
     private Page $origin;
 
+
+    /**
+     * Ctor wrap.
+     * @param Page $page
+     * @return PageByDeleteMethod
+     */
+    #[Pure] public static function new(Page $page): PageByDeleteMethod
+    {
+        return new self($page);
+    }
+
     /**
      * Ctor.
      * @param Page $page
      */
-    #[Pure] public function __construct(Page $page)
+    #[Pure] private function __construct(Page $page)
     {
-        $this->origin = new PageByMethods(['DELETE'], $page);
+        $this->origin = PageByMethods::new(['DELETE'], $page);
     }
 
     /**

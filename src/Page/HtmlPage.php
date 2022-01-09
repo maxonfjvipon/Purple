@@ -17,10 +17,20 @@ final class HtmlPage implements Page
     private string $body;
 
     /**
+     * Ctor wrap.
+     * @param string $body
+     * @return HtmlPage
+     */
+    #[Pure] public static function new(string $body): HtmlPage
+    {
+        return new self($body);
+    }
+
+    /**
      * Ctor.
      * @param string $bdy
      */
-    public function __construct(string $bdy)
+    private function __construct(string $bdy)
     {
         $this->body = $bdy;
     }
@@ -30,7 +40,7 @@ final class HtmlPage implements Page
      */
     #[Pure] public function handle(): PagePack
     {
-        return new PagePackSimple($this);
+        return PagePackSimple::new($this);
     }
 
     /**
@@ -40,8 +50,8 @@ final class HtmlPage implements Page
      */
     public function via(Response $response): Response
     {
-        return (new PageWith\PageWithBody($this->body))
-            ->via((new Page\PageWith\PageWithContent($this->body, 'text/html'))
+        return Page\PageWith\PageWithBody::new($this->body)
+            ->via(Page\PageWith\PageWithContent::new($this->body, 'text/html')
                 ->via($response));
     }
 }

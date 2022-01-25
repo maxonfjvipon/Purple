@@ -1,23 +1,22 @@
 <?php
 
-
-namespace Purple\Page\PageWith;
-
+namespace Purple\Frame\FrameWith;
 
 use ElegantBro\Stringify\Just;
 use Exception;
 use JetBrains\PhpStorm\Pure;
 use Maxonfjvipon\Elegant_Elephant\Numeric\LengthOfStingify;
-use Purple\PagePack;
-use Purple\PagePack\PagePackSimple;
+use Purple\FramePack;
+use Purple\Frame\FramePack\FrPackSimple;
+use Purple\Request;
 use Purple\Response;
-use Purple\Page;
+use Purple\Frame;
 
 /**
- * Page that print itself to output with Content-Length header
- * @package Purple\Page\PageVia
+ * Frame that print itself to output with Content-Length header
+ * @package Purple\Frame\FrameVia
  */
-final class PageWithContentLengthOf implements Page
+final class FrWithContentLengthOf implements Frame
 {
     /**
      * @var string $body
@@ -27,16 +26,16 @@ final class PageWithContentLengthOf implements Page
     /**
      * Ctor wrap.
      * @param string $body
-     * @return PageWithContentLengthOf
+     * @return FrWithContentLengthOf
      */
-    #[Pure] public static function new(string $body): PageWithContentLengthOf
+    #[Pure] public static function new(string $body): FrWithContentLengthOf
     {
         return new self($body);
     }
 
     /**
      * Ctor.
-     * PageWithContentLengthOf constructor.
+     * FrameWithContentLengthOf constructor.
      * @param string $bdy
      */
     private function __construct(string $bdy)
@@ -47,16 +46,16 @@ final class PageWithContentLengthOf implements Page
     /**
      * @inheritDoc
      */
-    #[Pure] public function handle(): PagePack
+    #[Pure] public function handle(Request $req): FramePack
     {
-        return PagePackSimple::new($this);
+        return FrPackSimple::new($this);
     }
 
     /**
      * @inheritDoc
      * @throws Exception
      */
-    public function via(Response $response): Response
+    public function writtenInVia(Response $response): Response
     {
         return $response->with(
             'Content-Length',

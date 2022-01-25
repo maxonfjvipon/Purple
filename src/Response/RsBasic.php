@@ -5,12 +5,25 @@ namespace Purple\Response;
 use JetBrains\PhpStorm\Pure;
 use Purple\Response;
 
-final class ResponseBasic implements Response
+/**
+ * The basic response.
+ * @package Purple\Response
+ */
+final class RsBasic implements Response
 {
+    /**
+     * @var int $status
+     */
     private int $status;
 
+    /**
+     * @var array $headers
+     */
     private array $headers;
 
+    /**
+     * @var string $body
+     */
     private string $body;
 
     /**
@@ -18,9 +31,9 @@ final class ResponseBasic implements Response
      * @param int $status
      * @param array $headers
      * @param string $body
-     * @return ResponseBasic
+     * @return RsBasic
      */
-    #[Pure] public static function new(int $status = 200, array $headers = [], $body = ""): ResponseBasic
+    #[Pure] public static function new(int $status = 200, array $headers = [], $body = ""): RsBasic
     {
         return new self($status, $headers, $body);
     }

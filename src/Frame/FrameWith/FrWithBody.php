@@ -1,14 +1,20 @@
 <?php
 
-namespace Purple\Page\PageWith;
+namespace Purple\Frame\FrameWith;
 
 use Exception;
 use JetBrains\PhpStorm\Pure;
-use Purple\PagePack;
+use Purple\FramePack;
+use Purple\Frame\FramePack\FrPackSimple;
+use Purple\Request;
 use Purple\Response;
-use Purple\Page;
+use Purple\Frame;
 
-final class PageWithBody implements Page
+/**
+ * Frame that represents itself with body.
+ * @package Purple\Frame\FrameWith
+ */
+final class FrWithBody implements Frame
 {
     /**
      * @var string $body
@@ -18,9 +24,9 @@ final class PageWithBody implements Page
     /**
      * Ctor wrap.
      * @param string $body
-     * @return PageWithBody
+     * @return FrWithBody
      */
-    #[Pure] public static function new(string $body): PageWithBody
+    #[Pure] public static function new(string $body): FrWithBody
     {
         return new self($body);
     }
@@ -37,16 +43,16 @@ final class PageWithBody implements Page
     /**
      * @inheritDoc
      */
-    #[Pure] public function handle(): PagePack
+    #[Pure] public function handle(Request $req): FramePack
     {
-        return PagePack\PagePackSimple::new($this);
+        return FrPackSimple::new($this);
     }
 
     /**
      * @inheritDoc
      * @throws Exception
      */
-    public function via(Response $response): Response
+    public function writtenInVia(Response $response): Response
     {
         return $response->with('X-Body', $this->body);
     }

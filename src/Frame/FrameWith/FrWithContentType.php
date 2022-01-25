@@ -1,18 +1,19 @@
 <?php
 
-namespace Purple\Page\PageWith;
+namespace Purple\Frame\FrameWith;
 
 use JetBrains\PhpStorm\Pure;
-use Purple\PagePack;
-use Purple\PagePack\PagePackSimple;
+use Purple\FramePack;
+use Purple\Frame\FramePack\FrPackSimple;
+use Purple\Request;
 use Purple\Response;
-use Purple\Page;
+use Purple\Frame;
 
 /**
- * Page that print itself to output with Content-Type header
- * @package Purple\Page\PageVia
+ * Frame that print itself to output with Content-Type header
+ * @package Purple\Frame\FrameVia
  */
-final class PageWithContentType implements Page
+final class FrWithContentType implements Frame
 {
     /**
      * @var string $contentType
@@ -28,9 +29,9 @@ final class PageWithContentType implements Page
      * Ctor wrap.
      * @param string $ctype
      * @param string $charset
-     * @return PageWithContentType
+     * @return FrWithContentType
      */
-    #[Pure] public static function new(string $ctype, string $charset = 'UTF-8'): PageWithContentType
+    #[Pure] public static function new(string $ctype, string $charset = 'UTF-8'): FrWithContentType
     {
         return new self($ctype, $charset);
     }
@@ -49,15 +50,15 @@ final class PageWithContentType implements Page
     /**
      * @inheritDoc
      */
-    #[Pure] public function handle(): PagePack
+    #[Pure] public function handle(Request $req): FramePack
     {
-        return PagePackSimple::new($this);
+        return FrPackSimple::new($this);
     }
 
     /**
      * @inheritDoc
      */
-    public function via(Response $response): Response
+    public function writtenInVia(Response $response): Response
     {
         return $response->with('Content-Type', $this->contentType . ';charset=' . $this->charset);
     }

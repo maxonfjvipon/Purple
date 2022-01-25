@@ -5,20 +5,20 @@ namespace Purple;
 use Exception;
 
 /**
- * Pack for the page.
+ * Pack for the frame.
  * @package Purple
  */
-interface PagePack
+interface FramePack
 {
     /**
-     * Return origin page if not empty
-     * @return Page
+     * Return origin frame if not empty
+     * @return Frame
      * @throws Exception
      */
-    public function origin(): Page;
+    public function origin(): Frame;
 
     /**
-     * Check if origin page exists
+     * Check if origin frame exists
      * @return bool
      */
     public function has(): bool;

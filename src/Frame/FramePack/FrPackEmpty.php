@@ -1,23 +1,22 @@
 <?php
 
-namespace Purple\PagePack;
+namespace Purple\Frame\FramePack;
 
 use Exception;
-use Purple\Page;
-use Purple\PagePack;
+use Purple\Frame;
+use Purple\FramePack;
 
 /**
- * Empty page pack.
- * @package Purple\PagePack
+ * Empty frame pack.
+ * @package Purple\Frame\FramePack
  */
-final class PagePackEmpty implements PagePack
+final class FrPackEmpty implements FramePack
 {
-
     /**
      * Ctor wrap.
-     * @return PagePackEmpty
+     * @return FrPackEmpty
      */
-    public static function new(): PagePackEmpty
+    public static function new(): FrPackEmpty
     {
         return new self();
     }
@@ -30,10 +29,10 @@ final class PagePackEmpty implements PagePack
     }
 
     /**
-     * @return Page
+     * @return Frame
      * @throws Exception
      */
-    public function origin(): Page
+    public function origin(): Frame
     {
         throw new Exception("There's nothing here, use has() first to check");
     }

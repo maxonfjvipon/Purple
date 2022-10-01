@@ -10,7 +10,7 @@ use Purple\Request\Request;
 /**
  * Routes.
  */
-final class Routes implements Route
+final class RtGroup implements Route
 {
     /**
      * @var array<Route> $routes

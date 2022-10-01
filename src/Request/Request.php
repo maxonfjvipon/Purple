@@ -30,7 +30,7 @@ interface Request
      * Add new header to itself.
      *
      * @param string $name
-     * @param string|float|int $value
+     * @param mixed $value
      * @return self
      * @throws Exception
      */

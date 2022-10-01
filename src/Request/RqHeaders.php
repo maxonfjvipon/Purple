@@ -34,7 +34,7 @@ final class RqHeaders extends AbstractArrayable implements RequestHeaders
 
     /**
      * @param string $key
-     * @return float|int|string
+     * @return mixed
      */
     public function header(string $key)
     {

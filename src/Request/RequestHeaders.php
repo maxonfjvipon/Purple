@@ -9,9 +9,11 @@ use Maxonfjvipon\Elegant_Elephant\Arrayable;
  */
 interface RequestHeaders extends Arrayable
 {
+    const ROUTE_PREFIXES = "X-ROUTE-PREFIXES";
+
     /**
      * @param string $key
-     * @return float|int|string
+     * @return mixed
      */
     public function header(string $key);
 }

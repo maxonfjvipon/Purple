@@ -32,7 +32,7 @@ final class SsDefault implements Session
     public function __construct(Route $route)
     {
         $this->route = $route;
-        $this->request = new RqDefault();
+        $this->request = RqDefault::new();
     }
 
     /**

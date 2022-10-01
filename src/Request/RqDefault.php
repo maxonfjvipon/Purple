@@ -98,7 +98,7 @@ final class RqDefault implements Request
 
     /**
      * @param string $name
-     * @param string|float|int $value
+     * @param mixed $value
      * @return self
      * @throws Exception
      */

@@ -1,11 +1,13 @@
 <?php
 
-use Purple\Route\Routes;
+use Purple\Route\RtGroup;
 use Purple\Route\RtDelete;
 use Purple\Route\RtGet;
 use Purple\Route\RtMethod;
 use Purple\Route\RtPost;
+use Purple\Route\RtPrefix;
 use Purple\Route\RtPut;
+use Purple\Route\RtUri;
 use Purple\Session\SsDefault;
 use Exception;
 
@@ -16,7 +18,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 (new SsDefault(
     new RtPrefix(
         'products',
-        new Routes(
+        new RtGroup(
             new RtGet(),
             new RtPost(),
             new RtPut(),

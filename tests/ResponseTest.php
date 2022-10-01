@@ -3,7 +3,7 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use PHPUnit\Framework\TestCase;
-use Purple\Response\RsBasic;
+use Purple\Response\RsDefault;
 
 /**
  * @runTestsInSeparateProcesses
@@ -17,7 +17,7 @@ class ResponseTest extends TestCase
     public function testBasicResponse()
     {
         $this->expectOutputString("");
-        (new RsBasic())->send();
+        (new RsDefault())->send();
     }
 
     /**

@@ -2,43 +2,42 @@
 
 namespace Purple\Request;
 
-use Purple\Request;
+use Maxonfjvipon\Elegant_Elephant\Arrayable\AbstractArrayable;
 
 /**
  * Request headers.
- * @package Purple\Request
  */
-final class RqHeaders implements RequestHeaders
+final class RqHeaders extends AbstractArrayable implements RequestHeaders
 {
     /**
-     * @var Request
+     * @var array $self
      */
-    private Request $request;
-
-    /**
-     * @param Request $req
-     * @return RqHeaders
-     */
-    public static function new(Request $req): RqHeaders
-    {
-        return new self($req);
-    }
+    private array $self;
 
     /**
      * Ctor.
-     * @param Request $req
+     *
+     * @param array $headers
      */
-    private function __construct(Request $req)
+    public function __construct(array $headers)
     {
-        $this->request = $req;
+        $this->self = $headers;
+    }
+
+    /**
+     * @return array<mixed>
+     */
+    public function asArray(): array
+    {
+        return $this->self;
     }
 
     /**
      * @param string $key
-     * @return string
+     * @return float|int|string
      */
-    public function header(string $key): string
+    public function header(string $key)
     {
-        return $this->request->envDataBy($key);
+        return $this->self[$key];
     }
 }

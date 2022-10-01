@@ -1,18 +1,17 @@
 <?php
 
-
 namespace Purple\Request;
 
+use Maxonfjvipon\Elegant_Elephant\Arrayable;
 
 /**
- *
- * @package Purple\Request
+ * Request headers.
  */
-interface RequestHeaders
+interface RequestHeaders extends Arrayable
 {
     /**
      * @param string $key
-     * @return mixed
+     * @return float|int|string
      */
-    public function header(string $key): mixed;
+    public function header(string $key);
 }

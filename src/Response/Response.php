@@ -1,12 +1,11 @@
 <?php
 
-namespace Purple;
+namespace Purple\Response;
 
 use Exception;
 
 /**
  * The response.
- * @package Purple
  */
 interface Response
 {
@@ -14,13 +13,14 @@ interface Response
      * Clarify itself.
      *
      * @param string $name
-     * @param string $value
+     * @param string|float|int $value
      * @return Response
      */
-    public function with(string $name, string $value): Response;
+    public function with(string $name, $value): Response;
 
     /**
-     * Send it self to the client.
+     * Send itself to the client.
+     *
      * @throws Exception
      */
     public function send(): void;

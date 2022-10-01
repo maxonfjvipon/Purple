@@ -10,17 +10,15 @@
     }
   ],
   "require": {
-    "php": ">=8.0",
+    "php": ">=7.4",
     "ext-json": "*",
     "maxonfjvipon/elegant-elephant": "dev-main"
   },
   "require-dev": {
-    "ext-simplexml": "*",
     "php-coveralls/php-coveralls": "^2.4",
     "phpstan/phpstan": "^0.12.64",
     "phpstan/phpstan-phpunit": "^0.12.17",
-    "phpunit/phpunit": "^9.5",
-    "roave/security-advisories": "dev-latest"
+    "phpunit/phpunit": "^9.5"
   },
   "autoload": {
     "psr-4": {
@@ -32,6 +30,8 @@
       "Purple\\Tests\\": "tests"
     }
   },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "config": {
     "preferred-install": {
       "*": "dist"

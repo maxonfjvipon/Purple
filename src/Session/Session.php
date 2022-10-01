@@ -1,17 +1,18 @@
 <?php
 
-namespace Purple;
+namespace Purple\Session;
 
 use Exception;
 
 /**
  * The session that process the request
- * @package Purple
  */
 interface Session
 {
     /**
-     * Process the request
+     * Process the request.
+     *
+     * @return void
      * @throws Exception
      */
     public function process(): void;

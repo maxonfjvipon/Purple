@@ -1,16 +1,26 @@
 <?php
 
-use Purple\Frame\Frames;
-use Purple\Session\SsBasic;
+use Purple\Route\Routes;
+use Purple\Route\RtDelete;
+use Purple\Route\RtGet;
+use Purple\Route\RtMethod;
+use Purple\Route\RtPost;
+use Purple\Route\RtPut;
+use Purple\Session\SsDefault;
+use Exception;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-\Purple\Request\RqLive::new();
+//echo '<pre>' . var_export($_SERVER, true) . '</pre>';
 
-echo '<pre>' . var_export($_SERVER, true) . '</pre>';
-echo '<pre>' . var_export($_REQUEST, true) . '</pre>';
-echo '<pre>' . var_export($_POST, true) . '</pre>';
-
-//SsBasic::new(
-//    Frames::new()
-//)->process();
+(new SsDefault(
+    new RtPrefix(
+        'products',
+        new Routes(
+            new RtGet(),
+            new RtPost(),
+            new RtPut(),
+            new RtDelete(),
+        )
+    )
+))->process();

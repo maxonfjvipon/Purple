@@ -2,48 +2,60 @@
 
 namespace Purple\Request;
 
-use Exception;
-use Maxonfjvipon\Elegant_Elephant\Arrayable\ArrExploded;
-use Maxonfjvipon\Elegant_Elephant\Text;
-use Purple\Request;
-
 /**
- * Request href
- * @package Purple\Request
+ * Request URI.
  */
-final class RqUri implements Text
+final class RqUri implements RequestUri
 {
     /**
-     * @var Request
+     * @var array<string, string> $self
      */
-    private Request $request;
-
-    /**
-     * Ctor wrap.
-     * @param Request $req
-     * @return RqUri
-     */
-    public static function new(Request $req): RqUri
-    {
-        return new self($req);
-    }
+    private array $self;
 
     /**
      * Ctor.
-     * @param Request $req
+     *
+     * @param array $components
      */
-    private function __construct(Request $req)
+    public function __construct(array $components)
     {
-        $this->request = $req;
+        $this->self = $components;
     }
 
     /**
-     * @inheritDoc
+     * @return string
      */
     public function asString(): string
     {
-        return ArrExploded::byString("?")
-            ->ofString(RqHeaders::new($this->request)->header("REQUEST_URI"))
-            ->asArray()[0];
+        return join([
+            $this->self['PROTOCOL'],
+            '://',
+            $this->self['HOST'],
+            $this->self['URI']
+        ]);
+    }
+
+    /**
+     * @return string
+     */
+    public function host(): string
+    {
+        return $this->self['HOST'];
+    }
+
+    /**
+     * @return string
+     */
+    public function query(): string
+    {
+        return $this->self['QUERY'];
+    }
+
+    /**
+     * @return string
+     */
+    public function path(): string
+    {
+        return explode('?', $this->self['URI'])[0];
     }
 }

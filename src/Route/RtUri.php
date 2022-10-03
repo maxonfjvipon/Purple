@@ -3,6 +3,10 @@
 namespace Purple\Route;
 
 use Exception;
+use Maxonfjvipon\Elegant_Elephant\Logical\PregMatch;
+use Maxonfjvipon\Elegant_Elephant\Text\TxtImploded;
+use Maxonfjvipon\Elegant_Elephant\Text\TxtJoined;
+use Maxonfjvipon\Elegant_Elephant\Text\TxtPregReplaced;
 use Purple\Endpoint\Endpoint;
 use Purple\Endpoint\OptionalEndpoint;
 use Purple\Request\Request;
@@ -45,20 +49,22 @@ final class RtUri implements Route
      */
     public function destination(Request $request): OptionalEndpoint
     {
-        return (new RtIf(
-            $request->uri()->path() === $this->resultUri($request),
-            $this->origin
-        ))->destination($request);
-    }
-
-    /**
-     * @param Request $request
-     * @return string
-     */
-    private function resultUri(Request $request): string
-    {
         $prefixes = $request->headers()->header(RequestHeaders::ROUTE_PREFIXES) ?? [];
 
-        return '/' . join('/', [...$prefixes, $this->trimUri($this->uri)]);
+        return (new RtIf(
+            new PregMatch(
+                new TxtJoined(
+                    '/^\/',
+                    new TxtPregReplaced(
+                        ['/{[a-z_]+}/', '/\//'],
+                        ['[0-9]+', '\/'],
+                        new TxtImploded('/', ...$prefixes, $this->trimUri($this->uri))
+                    ),
+                    '$/'
+                ),
+                $request->line()->uri()->path()
+            ),
+            $this->origin
+        ))->destination($request);
     }
 }

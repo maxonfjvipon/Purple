@@ -2,18 +2,12 @@
 
 namespace Purple\Request;
 
-use Maxonfjvipon\Elegant_Elephant\Arrayable;
+use Purple\Headers;
 
 /**
  * Request headers.
  */
-interface RequestHeaders extends Arrayable
+interface RequestHeaders extends Headers
 {
-    const ROUTE_PREFIXES = "X-ROUTE-PREFIXES";
-
-    /**
-     * @param string $key
-     * @return mixed
-     */
-    public function header(string $key);
+    const ROUTE_PREFIXES = "X-Route-Prefixes";
 }

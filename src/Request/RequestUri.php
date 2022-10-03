@@ -6,9 +6,15 @@ use Maxonfjvipon\Elegant_Elephant\Text;
 
 /**
  * Request URI.
+ * {PROTOCOL}://{HOST}{URI}
  */
 interface RequestUri extends Text
 {
+    const PROTOCOL = 'REQUEST_SCHEME';
+    const HOST = 'HTTP_HOST';
+    const URI = 'REQUEST_URI';
+    const QUERY = 'QUERY_STRING';
+
     /**
      * @return string request host
      */

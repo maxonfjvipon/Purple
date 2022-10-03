@@ -2,95 +2,64 @@
 
 namespace Purple\Response;
 
-use Exception;
-use Maxonfjvipon\Elegant_Elephant\Arrayable;
-use Maxonfjvipon\Elegant_Elephant\Text;
+use Maxonfjvipon\Elegant_Elephant\Text\CastText;
+use Purple\Headers;
+use Purple\Response\Body\ResponseBody;
 
 /**
  * The basic response.
  */
 final class RsDefault implements Response
 {
-    /**
-     * @var int $status
-     */
-    private int $status;
+    use CastText;
 
     /**
-     * @var array|Arrayable $headers
+     * @var Headers $headers
      */
-    private $headers;
+    private Headers $headers;
 
     /**
-     * @var string|Text $body
+     * @var ResponseBody $body
      */
-    private $body;
+    private ResponseBody $body;
 
     /**
      * Ctor wrap.
      *
-     * @param int $status
-     * @param array $headers
-     * @param string $body
+     * @param Headers $headers
+     * @param ResponseBody $body
      * @return self
      */
-    public static function new(int $status = 200, array $headers = [], string $body = ""): self
+    public static function new(Headers $headers, ResponseBody $body): self
     {
-        return new self($status, $headers, $body);
+        return new self($headers, $body);
     }
 
     /**
      * Ctor.
      *
-     * @param int $status
-     * @param array|Arrayable $headers
-     * @param string|Text $body
+     * @param Headers $headers
+     * @param ResponseBody $body
      */
-    public function __construct(int $status = 200, $headers = [], $body = "")
+    public function __construct(Headers $headers, ResponseBody $body)
     {
-        $this->status = $status;
         $this->headers = $headers;
         $this->body = $body;
     }
 
     /**
-     * @param string $name
-     * @param string|float|int $value
-     * @return Response
+     * @return ResponseBody
      */
-    public function with(string $name, $value): Response
+    public function body(): ResponseBody
     {
-        switch ($name) {
-            case 'X-Status':
-                return new self($value, $this->headers, $this->body);
-            case 'X-Body':
-                return new self($this->status, $this->headers, $value);
-            default:
-                return new self(
-                    $this->status,
-                    array_merge(
-                        $this->headers,
-                        ["$name: $value"]
-                    ),
-                    $this->body
-                );
-        }
+        return $this->body;
     }
 
     /**
-     * Send request to client.
-     *
-     * @throws Exception
+     * @return Headers
      */
-    public function send(): void
+    public function headers(): Headers
     {
-        header("HTTP/1.1 " . $this->status);
-
-        /** @var string|int|float $header */
-        foreach ($this->headers as $header) {
-            header($header);
-        }
-
-        echo $this->body;
+        return $this->headers;
     }
 }

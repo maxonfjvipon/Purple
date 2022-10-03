@@ -3,7 +3,8 @@
 namespace Purple\Request;
 
 use Exception;
-use Maxonfjvipon\Elegant_Elephant\Arrayable\ArrMerged;
+use Purple\Body;
+use Purple\Headers;
 
 /**
  * Live request.
@@ -16,21 +17,26 @@ final class RqDefault implements Request
     private array $self;
 
     /**
-     * @var RequestHeaders $headers
+     * @var Headers $headers
      */
-    private RequestHeaders $headers;
+    private Headers $headers;
 
     /**
-     * @var RqUri $uri
+     * @var RequestLine $line
      */
-    private RequestUri $uri;
+    private RequestLine $line;
+
+    /**
+     * @var RequestBody $body
+     */
+    private RequestBody $body;
 
     /**
      * Ctor wrap.
      *
      * @return $this
      */
-    public function new(): self
+    public static function new(): self
     {
         return new self(
             [
@@ -48,52 +54,57 @@ final class RqDefault implements Request
                 'HTTP_REFERER' => $_SERVER['HTTP_REFERER'] ?? '',
                 'HTTP_USER_AGENT' => $_SERVER['HTTP_USER_AGENT'],
             ]),
-            new RqUri([
-                'PROTOCOL' => $_SERVER['REQUEST_SCHEME'] ?? "http",
-                'HOST' => $_SERVER['HTTP_HOST'],
-                'URI' => $_SERVER['REQUEST_URI'],
-                'QUERY' => $_SERVER['QUERY_STRING']
-            ])
+            new RqLine(
+                $_SERVER[RequestLine::METHOD],
+                new RqUri([
+                    RequestUri::PROTOCOL => $_SERVER[RequestUri::PROTOCOL] ?? 'http',
+                    RequestUri::HOST => $_SERVER[RequestUri::HOST],
+                    RequestUri::URI => $_SERVER[RequestUri::URI],
+                    RequestUri::QUERY => $_SERVER[RequestUri::QUERY],
+                ])
+            ),
+            new RqBody($_REQUEST)
         );
     }
 
     /**
      * Ctor.
+     *
+     * @param array $self
+     * @param Headers $headers
+     * @param RqLine $line
+     * @param RequestBody $body
      */
-    private function __construct(array $self, RqHeaders $headers, RqUri $uri)
+    private function __construct(array $self, Headers $headers, RqLine $line, RequestBody $body)
     {
         $this->self = $self;
         $this->headers = $headers;
-        $this->uri = $uri;
+        $this->line = $line;
+        $this->body = $body;
     }
 
     /**
-     * @return string
+     * @return RequestLine
      */
-    public function method(): string
+    public function line(): RequestLine
     {
-        return $this->self['SERVER']['REQUEST_METHOD'];
+        return $this->line;
     }
 
     /**
-     * @return RequestUri
+     * @return Headers
      */
-    public function uri(): RequestUri
-    {
-        return $this->uri;
-    }
-
-    /**
-     * @return RequestHeaders
-     */
-    public function headers(): RequestHeaders
+    public function headers(): Headers
     {
         return $this->headers;
     }
 
-    public function body()
+    /**
+     * @return RequestBody
+     */
+    public function body(): RequestBody
     {
-        // TODO: Implement body() method.
+        return $this->body;
     }
 
     /**
@@ -112,7 +123,17 @@ final class RqDefault implements Request
                     [$name => $value]
                 )
             ),
-            $this->uri
+            $this->line,
+            $this->body
         );
+    }
+
+    /**
+     * @param $name
+     * @return mixed
+     */
+    public function __get($name)
+    {
+        return $this->body()->param($name);
     }
 }

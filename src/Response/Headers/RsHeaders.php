@@ -1,14 +1,13 @@
 <?php
 
-namespace Purple\Request;
+namespace Purple\Response\Headers;
 
-use Exception;
 use Maxonfjvipon\Elegant_Elephant\Arrayable\AbstractArrayable;
 
 /**
- * Request headers.
+ * Response headers.
  */
-final class RqHeaders extends AbstractArrayable implements RequestHeaders
+final class RsHeaders extends AbstractArrayable implements ResponseHeaders
 {
     /**
      * @var array $self
@@ -39,6 +38,6 @@ final class RqHeaders extends AbstractArrayable implements RequestHeaders
      */
     public function header(string $key)
     {
-        return $this->self[$key] ?? '';
+        return $this->self[$key] ?? "";
     }
 }

@@ -28,10 +28,10 @@ final class RqUri implements RequestUri
     public function asString(): string
     {
         return join([
-            $this->self['PROTOCOL'],
+            $this->self[RequestUri::PROTOCOL],
             '://',
-            $this->self['HOST'],
-            $this->self['URI']
+            $this->self[RequestUri::HOST],
+            $this->self[RequestUri::URI]
         ]);
     }
 
@@ -40,7 +40,7 @@ final class RqUri implements RequestUri
      */
     public function host(): string
     {
-        return $this->self['HOST'];
+        return $this->self[RequestUri::HOST];
     }
 
     /**
@@ -48,7 +48,7 @@ final class RqUri implements RequestUri
      */
     public function query(): string
     {
-        return $this->self['QUERY'];
+        return $this->self[RequestUri::QUERY];
     }
 
     /**
@@ -56,6 +56,6 @@ final class RqUri implements RequestUri
      */
     public function path(): string
     {
-        return explode('?', $this->self['URI'])[0];
+        return explode('?', $this->self[RequestUri::URI])[0];
     }
 }

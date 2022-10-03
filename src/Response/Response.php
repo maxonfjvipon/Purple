@@ -2,26 +2,19 @@
 
 namespace Purple\Response;
 
-use Exception;
+use Purple\Response\Body\ResponseBody;
+use Purple\WithBody;
+use Purple\WithHeaders;
 
 /**
  * The response.
  */
-interface Response
+interface Response extends WithHeaders, WithBody
 {
     /**
-     * Clarify itself.
+     * Get response body.
      *
-     * @param string $name
-     * @param string|float|int $value
-     * @return Response
+     * @return ResponseBody
      */
-    public function with(string $name, $value): Response;
-
-    /**
-     * Send itself to the client.
-     *
-     * @throws Exception
-     */
-    public function send(): void;
+    public function body(): ResponseBody;
 }

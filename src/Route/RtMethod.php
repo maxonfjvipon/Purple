@@ -42,7 +42,7 @@ final class RtMethod implements Route
     public function destination(Request $request): OptionalEndpoint
     {
         return (new RtIf(
-            $this->method === $request->method(),
+            $this->method === $request->line()->method(),
             $this->origin
         ))->destination($request);
     }

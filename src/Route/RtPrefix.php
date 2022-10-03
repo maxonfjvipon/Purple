@@ -6,7 +6,7 @@ use Exception;
 use Maxonfjvipon\Elegant_Elephant\Logical\PregMatch;
 use Maxonfjvipon\Elegant_Elephant\Text\TxtImploded;
 use Maxonfjvipon\Elegant_Elephant\Text\TxtJoined;
-use Maxonfjvipon\Elegant_Elephant\Text\TxtReplaced;
+use Maxonfjvipon\Elegant_Elephant\Text\TxtPregReplaced;
 use Purple\Endpoint\OptionalEndpoint;
 use Purple\Request\Request;
 use Purple\Request\RequestHeaders;
@@ -27,7 +27,7 @@ final class RtPrefix implements Route
     /**
      * @var Route $origin
      */
-    private $origin;
+    private Route $origin;
 
     /**
      * Ctor.
@@ -52,32 +52,20 @@ final class RtPrefix implements Route
 
         $prefixes = array_merge($prevPrefixes, [$this->trimUri($this->prefix)]);
 
-        $joinedPrefix = join('/', $prefixes);
-
-        preg_replace()
-
         return (new RtIf(
             new PregMatch(
                 new TxtJoined(
-                    "/\/",
-                    new TxtReplaced(
-                        '',
-                        new TxtImploded(
-                            '/',
-                            ...$prefixes
-                        )
-                    )
+                    '/^\/',
+                    new TxtPregReplaced(
+                        ['/{[a-z_]+}/', '/\//'],
+                        ['[0-9]+', '\/'],
+                        new TxtImploded("/", ...$prefixes)
+                    ),
+                    '.*$/'
                 ),
-                '/\/' . join('/', $prefixes) . '\//',
-                $request->uri()->path()
+                $request->line()->uri()->path(),
             ),
             $this->origin,
         ))->destination($request->with(RequestHeaders::ROUTE_PREFIXES, $prefixes));
-
-
-        return $this->origin->destination($request->with(
-            RequestHeaders::ROUTE_PREFIXES,
-            array_merge($prefixes, [$this->trimUri($this->prefix)])
-        ));
     }
 }

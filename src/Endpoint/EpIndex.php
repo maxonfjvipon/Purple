@@ -5,18 +5,16 @@ namespace Purple\Endpoint;
 use Exception;
 use Purple\Request\Request;
 use Purple\Response\Response;
+use Purple\Response\RsEmpty;
 
-/**
- * Endpoint.
- */
-interface Endpoint
+final class EpIndex implements Endpoint
 {
     /**
-     * Handle the request and return the response.
-     *
      * @param Request $request
      * @return Response
-     * @throws Exception
      */
-    public function act(Request $request): Response;
+    public function act(Request $request): Response
+    {
+        return new RsEmpty();
+    }
 }

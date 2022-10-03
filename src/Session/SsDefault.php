@@ -3,10 +3,11 @@
 namespace Purple\Session;
 
 use Exception;
-use HttpException;
+//use HttpException;
 use Purple\Endpoint\Endpoint;
 use Purple\Request\Request;
 use Purple\Request\RqDefault;
+use Purple\Response\RsSent;
 use Purple\Route\Route;
 
 /**
@@ -41,12 +42,12 @@ final class SsDefault implements Session
      */
     public function process(): void
     {
-        $this->target()->act($this->request)->send();
+        (new RsSent($this->target()->act($this->request)))->send();
     }
 
     /**
      * @return Endpoint
-     * @throws HttpException
+//     * @throws HttpException
      * @throws Exception
      */
     private function target(): Endpoint
@@ -57,6 +58,6 @@ final class SsDefault implements Session
             return $target->origin();
         }
 
-        throw new HttpException("Not found", 404);
+        throw new Exception("Not found", 404);
     }
 }

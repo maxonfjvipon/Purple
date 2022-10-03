@@ -3,28 +3,28 @@
 namespace Purple\Request;
 
 use Exception;
+use Purple\Body;
+use Purple\WithBody;
+use Purple\WithHeaders;
 
 /**
  * The request.
  */
-interface Request
+interface Request extends WithHeaders, WithBody
 {
     /**
-     * @return string request method
+     * Get request line.
+     *
+     * @return RequestLine
      */
-    public function method(): string;
+    public function line(): RequestLine;
 
     /**
-     * @return RequestUri request uri
+     * Get request body.
+     *
+     * @return RequestBody
      */
-    public function uri(): RequestUri;
-
-    /**
-     * @return RequestHeaders headers
-     */
-    public function headers(): RequestHeaders;
-
-    public function body();
+    public function body(): RequestBody;
 
     /**
      * Add new header to itself.
@@ -35,4 +35,12 @@ interface Request
      * @throws Exception
      */
     public function with(string $name, $value): self;
+
+    /**
+     * Get param from {@see RequestBody}
+     *
+     * @param $name
+     * @return mixed
+     */
+    public function __get($name);
 }

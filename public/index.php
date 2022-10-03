@@ -22,7 +22,6 @@ try {
                 new RtGet(new RtUri("edit", new EpEdit())),
                 new RtPost(new RtUri("/", new EpCreate())),
                 new RtPut(new RtUri('update', new EpUpdate())),
-                new RtDelete(new RtUri('/', new EpDelete())),
             ))
         ))
     ))->process();

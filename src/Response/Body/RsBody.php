@@ -2,38 +2,32 @@
 
 namespace Purple\Response\Body;
 
-use Exception;
-use Maxonfjvipon\Elegant_Elephant\Any;
 use Maxonfjvipon\Elegant_Elephant\Arrayable;
-use Maxonfjvipon\Elegant_Elephant\CastMixed;
-use Maxonfjvipon\Elegant_Elephant\Numerable;
+use Maxonfjvipon\Elegant_Elephant\Number;
+use Maxonfjvipon\Elegant_Elephant\Scalar;
+use Maxonfjvipon\Elegant_Elephant\Scalar\CastMixed;
 use Maxonfjvipon\Elegant_Elephant\Text;
-use Maxonfjvipon\Elegant_Elephant\Text\CastText;
 use Maxonfjvipon\Elegant_Elephant\Text\TextOf;
+use Maxonfjvipon\Elegant_Elephant\Text\TxtEnvelope;
+use Maxonfjvipon\Elegant_Elephant\Text\TxtFromCallback;
 use Maxonfjvipon\Elegant_Elephant\Text\TxtImploded;
 
 /**
  * Response body.
  */
-final class RsBody implements ResponseBody
+final class RsBody extends TxtEnvelope implements ResponseBody
 {
     use CastMixed;
-    use CastText;
-
-    /**
-     * @var string|callable|Text $self
-     */
-    private $self;
 
     /**
      * Ctor wrap.
      *
-     * @param int|float|Numerable $num
+     * @param int|float|Number $num
      * @return self
      */
     public static function ofNumber($num): self
     {
-        return new self(fn () => (string) $this->castMixed($num));
+        return new self(new TextOf($num));
     }
 
     /**
@@ -61,12 +55,12 @@ final class RsBody implements ResponseBody
     /**
      * Ctor wrap.
      *
-     * @param Any $any
+     * @param Scalar $scalar
      * @return self
      */
-    public static function ofAny(Any $any): self
+    public static function ofScalar(Scalar $scalar): self
     {
-        return new self(new TextOf($any));
+        return new self(new TextOf($scalar));
     }
 
     /**
@@ -76,15 +70,10 @@ final class RsBody implements ResponseBody
      */
     private function __construct($text)
     {
-        $this->self = $text;
-    }
-
-    /**
-     * @return string
-     * @throws Exception
-     */
-    public function asString(): string
-    {
-        return $this->textOrCallableCast($this->self);
+        parent::__construct(
+            new TxtFromCallback(
+                fn () => $this->mixedOrCallableCast($text)
+            )
+        );
     }
 }

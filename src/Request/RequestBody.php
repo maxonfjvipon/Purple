@@ -2,13 +2,12 @@
 
 namespace Purple\Request;
 
-use Maxonfjvipon\Elegant_Elephant\Arrayable;
 use Purple\Body;
 
 /**
  * Request body.
  */
-interface RequestBody extends Body, Arrayable
+interface RequestBody extends Body
 {
     /**
      * Get param from body.

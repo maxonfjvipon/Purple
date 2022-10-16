@@ -10,10 +10,10 @@ use Maxonfjvipon\Elegant_Elephant\Text;
  */
 interface RequestUri extends Text
 {
-    const PROTOCOL = 'REQUEST_SCHEME';
-    const HOST = 'HTTP_HOST';
-    const URI = 'REQUEST_URI';
-    const QUERY = 'QUERY_STRING';
+    public const PROTOCOL = 'REQUEST_SCHEME';
+    public const HOST = 'HTTP_HOST';
+    public const URI = 'REQUEST_URI';
+    public const QUERY = 'QUERY_STRING';
 
     /**
      * @return string request host

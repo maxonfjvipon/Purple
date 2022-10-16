@@ -4,6 +4,7 @@ namespace Purple\Response;
 
 use Purple\Headers;
 use Purple\Response\Body\ResponseBody;
+use Purple\Response\Headers\ResponseHeaders;
 
 /**
  * Response envelope.
@@ -34,9 +35,9 @@ class RsEnvelope implements Response
     }
 
     /**
-     * @return Headers
+     * @return ResponseHeaders
      */
-    public function headers(): Headers
+    public function headers(): ResponseHeaders
     {
         return $this->origin->headers();
     }

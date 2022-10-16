@@ -1,48 +1,49 @@
 <?php
 
-namespace Purple\Request;
+namespace Purple\Response\Headers;
 
+use Exception;
 use Maxonfjvipon\Elegant_Elephant\Arrayable\CountArrayable;
 use Maxonfjvipon\Elegant_Elephant\Arrayable\HasArrayableIterator;
 
 /**
- * Request headers.
+ * Response headers envelope.
  */
-final class RqHeaders implements RequestHeaders
+class RsHdsEnvelope implements ResponseHeaders
 {
     use HasArrayableIterator;
     use CountArrayable;
 
     /**
-     * @var array $self
+     * @var ResponseHeaders $origin
      */
-    private array $self;
+    private ResponseHeaders $origin;
 
     /**
      * Ctor.
      *
-     * @param array $headers
+     * @param ResponseHeaders $headers
      */
-    public function __construct(array $headers)
+    public function __construct(ResponseHeaders $headers)
     {
-        $this->self = $headers;
+        $this->origin = $headers;
     }
 
     /**
      * @return array<mixed>
+     * @throws Exception
      */
     public function asArray(): array
     {
-        return $this->self;
+        return $this->origin->asArray();
     }
 
     /**
-     * @todo: remove null
      * @param string $key
      * @return mixed
      */
     public function header(string $key)
     {
-        return $this->self[$key] ?? null;
+        return $this->origin->header($key);
     }
 }

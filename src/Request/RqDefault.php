@@ -3,8 +3,9 @@
 namespace Purple\Request;
 
 use Exception;
-use Purple\Body;
+use Maxonfjvipon\Elegant_Elephant\Arrayable\ArrMerged;
 use Purple\Headers;
+use Purple\Response\Headers\RsHdsWith;
 
 /**
  * Live request.
@@ -17,9 +18,9 @@ final class RqDefault implements Request
     private array $self;
 
     /**
-     * @var Headers $headers
+     * @var RequestHeaders $headers
      */
-    private Headers $headers;
+    private RequestHeaders $headers;
 
     /**
      * @var RequestLine $line
@@ -42,8 +43,18 @@ final class RqDefault implements Request
             [
                 'SERVER' => $_SERVER,
                 'REQUEST' => $_REQUEST,
-                'FILES' => $_FILES
+                'FILES' => $_FILES,
+                'USER' => ''
             ],
+            new RqLine(
+                $_SERVER[RequestLine::METHOD],
+                new RqUri([
+                    RequestUri::PROTOCOL => $_SERVER[RequestUri::PROTOCOL] ?? 'http',
+                    RequestUri::HOST => $_SERVER[RequestUri::HOST],
+                    RequestUri::URI => $_SERVER[RequestUri::URI],
+                    RequestUri::QUERY => $_SERVER[RequestUri::QUERY],
+                ])
+            ),
             new RqHeaders([
                 'HTTP_ACCEPT' => $_SERVER['HTTP_ACCEPT'],
                 'HTTP_ACCEPT_CHARSET' => $_SERVER['HTTP_ACCEPT_CHARSET'] ?? 'iso-8859-1,*,utf-8',
@@ -54,15 +65,6 @@ final class RqDefault implements Request
                 'HTTP_REFERER' => $_SERVER['HTTP_REFERER'] ?? '',
                 'HTTP_USER_AGENT' => $_SERVER['HTTP_USER_AGENT'],
             ]),
-            new RqLine(
-                $_SERVER[RequestLine::METHOD],
-                new RqUri([
-                    RequestUri::PROTOCOL => $_SERVER[RequestUri::PROTOCOL] ?? 'http',
-                    RequestUri::HOST => $_SERVER[RequestUri::HOST],
-                    RequestUri::URI => $_SERVER[RequestUri::URI],
-                    RequestUri::QUERY => $_SERVER[RequestUri::QUERY],
-                ])
-            ),
             new RqBody($_REQUEST)
         );
     }
@@ -71,11 +73,11 @@ final class RqDefault implements Request
      * Ctor.
      *
      * @param array $self
-     * @param Headers $headers
+     * @param RequestHeaders $headers
      * @param RqLine $line
      * @param RequestBody $body
      */
-    private function __construct(array $self, Headers $headers, RqLine $line, RequestBody $body)
+    private function __construct(array $self, RqLine $line, RequestHeaders $headers, RequestBody $body)
     {
         $this->self = $self;
         $this->headers = $headers;
@@ -92,9 +94,9 @@ final class RqDefault implements Request
     }
 
     /**
-     * @return Headers
+     * @return RequestHeaders
      */
-    public function headers(): Headers
+    public function headers(): RequestHeaders
     {
         return $this->headers;
     }
@@ -117,13 +119,13 @@ final class RqDefault implements Request
     {
         return new self(
             $this->self,
+            $this->line,
             new RqHeaders(
                 array_merge(
                     $this->headers->asArray(),
                     [$name => $value]
                 )
             ),
-            $this->line,
             $this->body
         );
     }

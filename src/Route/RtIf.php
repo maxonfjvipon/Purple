@@ -3,8 +3,8 @@
 namespace Purple\Route;
 
 use Exception;
-use Maxonfjvipon\Elegant_Elephant\Logical;
-use Maxonfjvipon\Elegant_Elephant\Logical\CastLogical;
+use Maxonfjvipon\Elegant_Elephant\Boolean;
+use Maxonfjvipon\Elegant_Elephant\Scalar\CastMixed;
 use Purple\Endpoint\Endpoint;
 use Purple\Endpoint\EpOptDefault;
 use Purple\Endpoint\EpOptEmpty;
@@ -16,10 +16,10 @@ use Purple\Request\Request;
  */
 final class RtIf implements Route
 {
-    use CastLogical;
+    use CastMixed;
 
     /**
-     * @var bool|Logical $condition
+     * @var callable|bool|Boolean $condition
      */
     private $condition;
 
@@ -29,15 +29,22 @@ final class RtIf implements Route
     private $origin;
 
     /**
+     * @var array<mixed> $args
+     */
+    private array $args;
+
+    /**
      * Ctor.
      *
-     * @param bool|Logical $condition
      * @param Endpoint|Route $origin
+     * @param callable|bool|Boolean $condition
+     * @param mixed ...$args
      */
-    public function __construct($condition, $origin)
+    public function __construct($origin, $condition, ...$args)
     {
-        $this->condition = $condition;
         $this->origin = $origin;
+        $this->condition = $condition;
+        $this->args = $args;
     }
 
     /**
@@ -47,7 +54,18 @@ final class RtIf implements Route
      */
     public function destination(Request $request): OptionalEndpoint
     {
-        if ($this->logicalCast($this->condition)) {
+        /** @var bool|callable $condition */
+        $condition = $this->mixedCast($this->condition);
+
+        if (is_callable($condition)) {
+            $condition = $this->mixedCast(call_user_func($condition, $request, ...$this->args));
+
+            if (!is_bool($condition)) {
+                throw new Exception("Condition callback must return bool or an instance of Boolean");
+            }
+        }
+
+        if ($condition) {
             if ($this->origin instanceof Route) {
                 return $this->origin->destination($request);
             }

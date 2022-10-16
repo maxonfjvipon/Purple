@@ -2,11 +2,16 @@
 
 namespace Purple\Request;
 
+use Exception;
+use Maxonfjvipon\Elegant_Elephant\Text\StringableText;
+
 /**
  * Request line.
  */
 final class RqLine implements RequestLine
 {
+    use StringableText;
+
     /**
      * @var string $method
      */
@@ -43,5 +48,14 @@ final class RqLine implements RequestLine
     public function uri(): RequestUri
     {
         return $this->uri;
+    }
+
+    /**
+     * @return string
+     * @throws Exception
+     */
+    public function asString(): string
+    {
+        return $this->method . " " . $this->uri->asString();
     }
 }

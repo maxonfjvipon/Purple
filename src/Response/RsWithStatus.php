@@ -3,8 +3,7 @@
 namespace Purple\Response;
 
 use Exception;
-use Maxonfjvipon\Elegant_Elephant\Text;
-use Maxonfjvipon\Elegant_Elephant\Text\CastText;
+use Maxonfjvipon\Elegant_Elephant\Scalar\CastMixed;
 use Purple\Response\Headers\ResponseHeaders;
 use Purple\Support\HttpStatus;
 
@@ -13,7 +12,7 @@ use Purple\Support\HttpStatus;
  */
 final class RsWithStatus extends RsEnvelope
 {
-    use CastText;
+    use CastMixed;
 
     /**
      * Ctor wrap.
@@ -33,16 +32,16 @@ final class RsWithStatus extends RsEnvelope
      *
      * @param Response $response
      * @param int $code
-     * @param string|Text $reason
+     * @param string $reason
      * @throws Exception
      */
-    public function __construct(Response $response, int $code, $reason)
+    public function __construct(Response $response, int $code, string $reason)
     {
         parent::__construct(
             new RsWithHeader(
                 $response,
                 ResponseHeaders::STATUS,
-                "HTTP/1.1 $code {$this->textCast($reason)}"
+                "HTTP/1.1 $code $reason"
             )
         );
     }
@@ -58,6 +57,7 @@ final class RsWithStatus extends RsEnvelope
 
     /** @var array<string, string> REASONS */
     private const REASONS = [
-        HttpStatus::HTTP_OK => "OK"
+        HttpStatus::HTTP_OK => "OK",
+        HttpStatus::SEE_OTHER => "See Other",
     ];
 }

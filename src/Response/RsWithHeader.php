@@ -3,7 +3,8 @@
 namespace Purple\Response;
 
 use Exception;
-use Maxonfjvipon\Elegant_Elephant\CastMixed;
+use Maxonfjvipon\Elegant_Elephant\Scalar\CastMixed;
+use Purple\Response\Headers\RsHdsWith;
 use Purple\Response\Headers\RsHeaders;
 
 /**
@@ -25,11 +26,10 @@ final class RsWithHeader extends RsEnvelope
     {
         parent::__construct(
             new RsDefault(
-                new RsHeaders(
-                    array_merge(
-                        $response->headers()->asArray(),
-                        [$name => $this->castMixed($value)]
-                    )
+                new RsHdsWith(
+                    $response->headers(),
+                    $name,
+                    $value
                 ),
                 $response->body()
             )

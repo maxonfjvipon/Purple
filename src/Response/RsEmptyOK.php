@@ -18,10 +18,7 @@ final class RsEmptyOK extends RsEnvelope
     public function __construct()
     {
         parent::__construct(
-            RsWithStatus::withoutReason(
-                new RsEmpty(),
-                HttpStatus::HTTP_OK
-            )
+            new RsEmptyWithStatus(HttpStatus::HTTP_OK)
         );
     }
 }

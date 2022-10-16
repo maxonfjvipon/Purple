@@ -3,12 +3,13 @@
 namespace Purple\Response;
 
 use Exception;
-use Maxonfjvipon\Elegant_Elephant\Numerable\LengthOf;
+use Maxonfjvipon\Elegant_Elephant\Number\LengthOf;
 use Maxonfjvipon\Elegant_Elephant\Text\TxtSticky;
-use Purple\Request\RqHeaders;
 use Purple\Response\Body\ResponseBody;
 use Purple\Response\Body\RsBody;
 use Purple\Response\Headers\ResponseHeaders;
+use Purple\Response\Headers\RsHdsWith;
+use Purple\Response\Headers\RsHeaders;
 
 /**
  * Response with body.
@@ -24,16 +25,12 @@ final class RsWithBody extends RsEnvelope
     {
         parent::__construct(
             new RsDefault(
-                (new RsWithHeader(
-                    $response,
+                new RsHdsWith(
+                    $response->headers(),
                     ResponseHeaders::CONTENT_LENGTH,
-                    new LengthOf(
-                        $_body = RsBody::ofText(
-                            new TxtSticky($body)
-                        )
-                    )
-                ))->headers(),
-                $_body
+                    new LengthOf($body)
+                ),
+                $body
             )
         );
     }

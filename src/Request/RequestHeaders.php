@@ -9,5 +9,5 @@ use Purple\Headers;
  */
 interface RequestHeaders extends Headers
 {
-    const ROUTE_PREFIXES = "X-Route-Prefixes";
+    public const ROUTE_PREFIXES = "X-Route-Prefixes";
 }

@@ -5,12 +5,13 @@ namespace Purple\Response;
 /**
  * Response sent.
  */
-interface ResponseSent extends Response
+interface ResponseSent
 {
     /**
      * Send itself to the client.
      *
+     * @param Response $response
      * @return void
      */
-    public function send(): void;
+    public function send(Response $response): void;
 }

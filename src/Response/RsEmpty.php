@@ -5,7 +5,8 @@ namespace Purple\Response;
 use Purple\Headers;
 use Purple\Response\Body\ResponseBody;
 use Purple\Response\Body\RsBodyEmpty;
-use Purple\Response\Headers\RsHeadersEmpty;
+use Purple\Response\Headers\ResponseHeaders;
+use Purple\Response\Headers\RsHdsEmpty;
 
 /**
  * Empty response.
@@ -26,10 +27,10 @@ final class RsEmpty implements Response
     }
 
     /**
-     * @return Headers
+     * @return ResponseHeaders
      */
-    public function headers(): Headers
+    public function headers(): ResponseHeaders
     {
-        return $this->cache['headers'] ??= new RsHeadersEmpty();
+        return $this->cache['headers'] ??= new RsHdsEmpty();
     }
 }

@@ -13,6 +13,6 @@ trait TrimUri
      */
     private function trimUri(string $uri): string
     {
-        return trim($uri, '/ \t\n\r\0\x0B');
+        return trim($uri, "/ \t\n\r\0\x0B");
     }
 }

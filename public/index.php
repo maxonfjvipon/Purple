@@ -1,9 +1,8 @@
 <?php
 
-use Purple\Endpoint\EpIndex;
-use Purple\Route\RtDelete;
 use Purple\Route\RtGet;
 use Purple\Route\RtGroup;
+use Purple\Route\RtMethod;
 use Purple\Route\RtPost;
 use Purple\Route\RtPrefix;
 use Purple\Route\RtPut;
@@ -16,15 +15,28 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 try {
     (new SsDefault(
-        new RtPrefix("projects", new RtGroup(
-            new RtGet(new RtUri("/", new EpIndex())),
-            new RtPrefix("{project}", new RtGroup(
-                new RtGet(new RtUri("edit", new EpEdit())),
-                new RtPost(new RtUri("/", new EpCreate())),
-                new RtPut(new RtUri('update', new EpUpdate())),
-                new RtDelete(new RtUri('/', new EpDelete())),
-            ))
-        ))
+        new RtPrefix("projects",
+            new RtGroup(
+                new RtGet(
+                    new RtGroup(
+                        new RtUri("/", new EpIndex()),
+                        new RtUri('create', new EpCreate())
+                    )
+                ),
+                new RtPost(new RtUri("/", new EpStore())),
+                new RtPrefix("{project}",
+                    new RtGroup(
+                        new RtGet(
+                            new RtGroup(
+                                new RtUri("edit", new EpEdit()),
+                                new RtUri('/', new EpShow())
+                            )
+                        ),
+                        new RtPut(new RtUri("/", new EpUpdate()))
+                    )
+                )
+            )
+        )
     ))->process();
 } catch (Exception $e) {
 }

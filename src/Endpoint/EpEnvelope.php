@@ -12,7 +12,7 @@ use Purple\Response\Response;
 class EpEnvelope implements Endpoint
 {
     /**
-     * @var Endpoint
+     * @var Endpoint $origin
      */
     private Endpoint $origin;
 

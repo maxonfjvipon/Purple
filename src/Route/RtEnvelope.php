@@ -16,6 +16,8 @@ class RtEnvelope implements Route
     private Route $origin;
 
     /**
+     * Ctor.
+     *
      * @param Route $origin
      */
     public function __construct(Route $origin)

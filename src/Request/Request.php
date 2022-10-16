@@ -3,7 +3,7 @@
 namespace Purple\Request;
 
 use Exception;
-use Purple\Body;
+use Purple\Headers;
 use Purple\WithBody;
 use Purple\WithHeaders;
 
@@ -13,11 +13,11 @@ use Purple\WithHeaders;
 interface Request extends WithHeaders, WithBody
 {
     /**
-     * Get request line.
+     * Get request headers.
      *
-     * @return RequestLine
+     * @return RequestHeaders
      */
-    public function line(): RequestLine;
+    public function headers(): RequestHeaders;
 
     /**
      * Get request body.
@@ -25,6 +25,13 @@ interface Request extends WithHeaders, WithBody
      * @return RequestBody
      */
     public function body(): RequestBody;
+
+    /**
+     * Get request line.
+     *
+     * @return RequestLine
+     */
+    public function line(): RequestLine;
 
     /**
      * Add new header to itself.

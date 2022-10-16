@@ -2,48 +2,26 @@
 
 namespace Purple\Route;
 
-use Exception;
-use Purple\Endpoint\Endpoint;
-use Purple\Endpoint\OptionalEndpoint;
 use Purple\Request\Request;
 
 /**
  * Route with method.
  */
-final class RtMethod implements Route
+final class RtMethod extends RtEnvelope
 {
-    /**
-     * @var string $method
-     */
-    private string $method;
-
-    /**
-     * @var Endpoint|Route $origin
-     */
-    private $origin;
-
     /**
      * Ctor.
      *
      * @param string $method
-     * @param Endpoint|Route $origin
+     * @param Route $origin
      */
-    public function __construct(string $method, $origin)
+    public function __construct(string $method, Route $origin)
     {
-        $this->method = $method;
-        $this->origin = $origin;
-    }
-
-    /**
-     * @param Request $request
-     * @return OptionalEndpoint
-     * @throws Exception
-     */
-    public function destination(Request $request): OptionalEndpoint
-    {
-        return (new RtIf(
-            $this->method === $request->line()->method(),
-            $this->origin
-        ))->destination($request);
+        parent::__construct(
+            new RtIf(
+                $origin,
+                fn (Request $request) => $method === $request->line()->method()
+            )
+        );
     }
 }

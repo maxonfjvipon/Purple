@@ -10,6 +10,8 @@ use Purple\Endpoint\Endpoint;
 final class RtPut extends RtEnvelope
 {
     /**
+     * Ctor.
+     *
      * @param Route|Endpoint $origin
      */
     public function __construct($origin)

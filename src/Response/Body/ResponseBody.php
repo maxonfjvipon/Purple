@@ -1,12 +1,13 @@
 <?php
 
-namespace Purple\Response\Body;
+namespace Maxonfjvipon\Purple\Response\Body;
 
-use Purple\Body;
+use Maxonfjvipon\ElegantElephant\Txt\StringableTxt;
+use Maxonfjvipon\Purple\Body;
 
 /**
  * Response body.
  */
-interface ResponseBody extends Body
+interface ResponseBody extends Body, StringableTxt
 {
 }

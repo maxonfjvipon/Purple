@@ -1,14 +1,14 @@
 <?php
 
-namespace Purple\Response;
+namespace Maxonfjvipon\Purple\Response;
 
 use Exception;
-use Purple\Support\HttpStatus;
+use Maxonfjvipon\Purple\Support\HttpStatus;
 
 /**
  * Empty response with status 200 OK
  */
-final class RsEmptyOK extends RsEnvelope
+final class RsEmptyOK extends RsWrap
 {
     /**
      * Ctor.

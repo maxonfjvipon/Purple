@@ -1,12 +1,12 @@
 <?php
 
-namespace Purple;
+namespace Maxonfjvipon\Purple;
 
-use Maxonfjvipon\Elegant_Elephant\Text;
+use Maxonfjvipon\ElegantElephant\Txt;
 
 /**
  * Body.
  */
-interface Body extends Text
+interface Body extends Txt
 {
 }

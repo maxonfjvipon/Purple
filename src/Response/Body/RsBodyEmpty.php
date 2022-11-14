@@ -1,14 +1,14 @@
 <?php
 
-namespace Purple\Response\Body;
+namespace Maxonfjvipon\Purple\Response\Body;
 
-use Maxonfjvipon\Elegant_Elephant\Text\TxtBlank;
-use Maxonfjvipon\Elegant_Elephant\Text\TxtEnvelope;
+use Maxonfjvipon\ElegantElephant\Txt\TxtBlank;
+use Maxonfjvipon\ElegantElephant\Txt\TxtWrap;
 
 /**
  * Empty response body.
  */
-final class RsBodyEmpty extends TxtEnvelope implements ResponseBody
+final class RsBodyEmpty extends TxtWrap implements ResponseBody
 {
     /**
      * Ctor.

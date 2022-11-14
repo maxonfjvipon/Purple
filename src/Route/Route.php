@@ -1,9 +1,9 @@
 <?php
 
-namespace Purple\Route;
+namespace Maxonfjvipon\Purple\Route;
 
-use Purple\Endpoint\OptionalEndpoint;
-use Purple\Request\Request;
+use Maxonfjvipon\Purple\Endpoint\OptionalEndpoint;
+use Maxonfjvipon\Purple\Request\Request;
 
 /**
  * Route.

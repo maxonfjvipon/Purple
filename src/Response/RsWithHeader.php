@@ -1,19 +1,15 @@
 <?php
 
-namespace Purple\Response;
+namespace Maxonfjvipon\Purple\Response;
 
 use Exception;
-use Maxonfjvipon\Elegant_Elephant\Scalar\CastMixed;
-use Purple\Response\Headers\RsHdsWith;
-use Purple\Response\Headers\RsHeaders;
+use Maxonfjvipon\Purple\Response\Headers\RsHdsWith;
 
 /**
  * Response with header.
  */
-final class RsWithHeader extends RsEnvelope
+final class RsWithHeader extends RsWrap
 {
-    use CastMixed;
-
     /**
      * Ctor.
      *
@@ -22,7 +18,7 @@ final class RsWithHeader extends RsEnvelope
      * @param mixed $value
      * @throws Exception
      */
-    public function __construct(Response $response, string $name, $value)
+    public function __construct(Response $response, string $name, mixed $value)
     {
         parent::__construct(
             new RsDefault(

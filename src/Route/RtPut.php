@@ -1,20 +1,20 @@
 <?php
 
-namespace Purple\Route;
+namespace Maxonfjvipon\Purple\Route;
 
-use Purple\Endpoint\Endpoint;
+use Maxonfjvipon\Purple\Endpoint\Endpoint;
 
 /**
  * Route PUT.
  */
-final class RtPut extends RtEnvelope
+final class RtPut extends RtWrap
 {
     /**
      * Ctor.
      *
-     * @param Route|Endpoint $origin
+     * @param Endpoint|Route $origin
      */
-    public function __construct($origin)
+    public function __construct(Endpoint|Route $origin)
     {
         parent::__construct(
             new RtMethod(

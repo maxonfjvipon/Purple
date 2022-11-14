@@ -1,25 +1,22 @@
 <?php
 
-namespace Purple\Response;
+namespace Maxonfjvipon\Purple\Response;
 
-use Exception;
-use Maxonfjvipon\Elegant_Elephant\Number\LengthOf;
-use Maxonfjvipon\Elegant_Elephant\Text\TxtSticky;
-use Purple\Response\Body\ResponseBody;
-use Purple\Response\Body\RsBody;
-use Purple\Response\Headers\ResponseHeaders;
-use Purple\Response\Headers\RsHdsWith;
-use Purple\Response\Headers\RsHeaders;
+use Maxonfjvipon\ElegantElephant\Num\LengthOf;
+use Maxonfjvipon\Purple\Response\Body\ResponseBody;
+use Maxonfjvipon\Purple\Response\Headers\ResponseHeaders;
+use Maxonfjvipon\Purple\Response\Headers\RsHdsWith;
 
 /**
  * Response with body.
  */
-final class RsWithBody extends RsEnvelope
+final class RsWithBody extends RsWrap
 {
     /**
      * Ctor.
      *
-     * @throws Exception
+     * @param Response $response
+     * @param ResponseBody $body
      */
     public function __construct(Response $response, ResponseBody $body)
     {

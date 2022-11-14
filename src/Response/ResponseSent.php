@@ -1,6 +1,6 @@
 <?php
 
-namespace Purple\Response;
+namespace Maxonfjvipon\Purple\Response;
 
 /**
  * Response sent.

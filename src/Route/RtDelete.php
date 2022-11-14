@@ -1,20 +1,20 @@
 <?php
 
-namespace Purple\Route;
+namespace Maxonfjvipon\Purple\Route;
 
-use Purple\Endpoint\Endpoint;
+use Maxonfjvipon\Purple\Endpoint\Endpoint;
 
 /**
  * Route DELETE.
  */
-final class RtDelete extends RtEnvelope
+final class RtDelete extends RtWrap
 {
     /**
      * Ctor.
      *
      * @param Route|Endpoint $origin
      */
-    public function __construct($origin)
+    public function __construct(Route|Endpoint $origin)
     {
         parent::__construct(
             new RtMethod(

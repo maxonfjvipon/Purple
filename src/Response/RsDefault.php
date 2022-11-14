@@ -1,10 +1,9 @@
 <?php
 
-namespace Purple\Response;
+namespace Maxonfjvipon\Purple\Response;
 
-use Purple\Headers;
-use Purple\Response\Body\ResponseBody;
-use Purple\Response\Headers\ResponseHeaders;
+use Maxonfjvipon\Purple\Response\Body\ResponseBody;
+use Maxonfjvipon\Purple\Response\Headers\ResponseHeaders;
 
 /**
  * The basic response.
@@ -12,25 +11,16 @@ use Purple\Response\Headers\ResponseHeaders;
 final class RsDefault implements Response
 {
     /**
-     * @var ResponseHeaders $headers
-     */
-    private ResponseHeaders $headers;
-
-    /**
-     * @var ResponseBody $body
-     */
-    private ResponseBody $body;
-
-    /**
      * Ctor.
      *
      * @param ResponseHeaders $headers
      * @param ResponseBody $body
      */
-    public function __construct(ResponseHeaders $headers, ResponseBody $body)
+    public function __construct(
+        private ResponseHeaders $headers,
+        private ResponseBody $body
+    )
     {
-        $this->headers = $headers;
-        $this->body = $body;
     }
 
     /**

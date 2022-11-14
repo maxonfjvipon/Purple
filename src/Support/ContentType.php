@@ -1,15 +1,15 @@
 <?php
 
-namespace Purple\Support;
+namespace Maxonfjvipon\Purple\Support;
 
 /**
  * HTTP Content-Type
  */
 final class ContentType
 {
-    const TEXT = "text/plain";
-    const HTML = "text/html";
-    const JSON = "application/json";
+    public const TEXT = "text/plain";
+    public const HTML = "text/html";
+    public const JSON = "application/json";
 
     /**
      * Ctor.

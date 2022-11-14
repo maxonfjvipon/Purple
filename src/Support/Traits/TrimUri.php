@@ -1,6 +1,6 @@
 <?php
 
-namespace Purple\Support\Traits;
+namespace Maxonfjvipon\Purple\Support\Traits;
 
 /**
  * Trim URI.

@@ -1,29 +1,28 @@
 <?php
 
-namespace Purple\Response;
+namespace Maxonfjvipon\Purple\Response;
 
 use Exception;
-use Maxonfjvipon\Elegant_Elephant\Text;
-use Purple\Response\Body\RsBody;
-use Purple\Support\ContentType;
-use Purple\Support\HttpStatus;
+use Maxonfjvipon\ElegantElephant\Txt;
+use Maxonfjvipon\Purple\Response\Body\RsBodyOf;
+use Maxonfjvipon\Purple\Support\ContentType;
 
 /**
  * Text response.
  */
-final class RsText extends RsEnvelope
+final class RsText extends RsWrap
 {
     /**
-     * @param string|Text $text
+     * @param string|Txt $text
      * @throws Exception
      */
-    public function __construct($text)
+    public function __construct(string|Txt $text)
     {
         parent::__construct(
             new RsWithType(
                 new RsWithBody(
                     new RsEmptyOK(),
-                    RsBody::ofText($text)
+                    RsBodyOf::text($text)
                 ),
                 ContentType::TEXT
             )

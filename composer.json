@@ -10,9 +10,9 @@
     }
   ],
   "require": {
-    "php": ">=7.4",
+    "php": ">=8.0",
     "ext-json": "*",
-    "maxonfjvipon/elegant-elephant": "^2.0"
+    "maxonfjvipon/elegant-elephant": "^4.0"
   },
   "require-dev": {
     "php-coveralls/php-coveralls": "^2.4",
@@ -22,12 +22,12 @@
   },
   "autoload": {
     "psr-4": {
-      "Purple\\": "src"
+      "Maxonfjvipon\\Purple\\": "src"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Purple\\Tests\\": "tests"
+      "Maxonfjvipon\\Purple\\Tests\\": "tests"
     }
   },
   "minimum-stability": "dev",

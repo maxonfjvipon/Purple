@@ -1,24 +1,24 @@
 <?php
 
-namespace Purple\Response;
+namespace Maxonfjvipon\Purple\Response;
 
 use Exception;
-use Maxonfjvipon\Elegant_Elephant\Text;
-use Purple\Response\Headers\ResponseHeaders;
+use Maxonfjvipon\ElegantElephant\Txt;
+use Maxonfjvipon\Purple\Response\Headers\ResponseHeaders;
 
 /**
  * Response with type.
  */
-final class RsWithType extends RsEnvelope
+final class RsWithType extends RsWrap
 {
     /**
      * Ctor.
      *
      * @param Response $response
-     * @param string|Text $type
+     * @param string|Txt $type
      * @throws Exception
      */
-    public function __construct(Response $response, $type)
+    public function __construct(Response $response, string|Txt $type)
     {
         parent::__construct(
             new RsWithHeader(

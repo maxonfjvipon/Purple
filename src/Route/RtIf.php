@@ -1,48 +1,47 @@
 <?php
 
-namespace Purple\Route;
+namespace Maxonfjvipon\Purple\Route;
 
 use Exception;
-use Maxonfjvipon\Elegant_Elephant\Boolean;
-use Maxonfjvipon\Elegant_Elephant\Scalar\CastMixed;
-use Purple\Endpoint\Endpoint;
-use Purple\Endpoint\EpOptDefault;
-use Purple\Endpoint\EpOptEmpty;
-use Purple\Endpoint\OptionalEndpoint;
-use Purple\Request\Request;
+use Maxonfjvipon\ElegantElephant\Logic;
+use Maxonfjvipon\ElegantElephant\Logic\LogicCond;
+use Maxonfjvipon\ElegantElephant\Logic\LogicOf;
+use Maxonfjvipon\Purple\Endpoint\Endpoint;
+use Maxonfjvipon\Purple\Endpoint\EpOptCond;
+use Maxonfjvipon\Purple\Endpoint\EpOptDefault;
+use Maxonfjvipon\Purple\Endpoint\EpOptEmpty;
+use Maxonfjvipon\Purple\Endpoint\EpOptOf;
+use Maxonfjvipon\Purple\Endpoint\OptionalEndpoint;
+use Maxonfjvipon\Purple\Request\Request;
 
 /**
- * Conditionable route.
+ * Conditional route.
  */
 final class RtIf implements Route
 {
-    use CastMixed;
-
     /**
-     * @var callable|bool|Boolean $condition
+     * @var bool|callable|Logic $condition
      */
     private $condition;
 
     /**
-     * @var Endpoint|Route $origin
-     */
-    private $origin;
-
-    /**
-     * @var array<mixed> $args
+     * @var array $args
      */
     private array $args;
 
     /**
      * Ctor.
      *
+     * @param callable|bool|Logic $condition
      * @param Endpoint|Route $origin
-     * @param callable|bool|Boolean $condition
      * @param mixed ...$args
      */
-    public function __construct($origin, $condition, ...$args)
+    public function __construct(
+        bool|callable|Logic $condition,
+        private Endpoint|Route $origin,
+        mixed ...$args
+    )
     {
-        $this->origin = $origin;
         $this->condition = $condition;
         $this->args = $args;
     }
@@ -54,25 +53,18 @@ final class RtIf implements Route
      */
     public function destination(Request $request): OptionalEndpoint
     {
-        /** @var bool|callable $condition */
-        $condition = $this->mixedCast($this->condition);
-
-        if (is_callable($condition)) {
-            $condition = $this->mixedCast(call_user_func($condition, $request, ...$this->args));
-
-            if (!is_bool($condition)) {
-                throw new Exception("Condition callback must return bool or an instance of Boolean");
-            }
-        }
-
-        if ($condition) {
-            if ($this->origin instanceof Route) {
-                return $this->origin->destination($request);
-            }
-
-            return new EpOptDefault($this->origin);
-        }
-
-        return new EpOptEmpty();
+        return new EpOptCond(
+            new LogicCond(
+                is_callable($this->condition),
+                LogicOf::func($this->condition, $request, ...$this->args),
+                LogicOf::func(fn () => $this->condition)
+            ),
+            new EpOptCond(
+                LogicOf::func(fn () => $this->origin instanceof Route),
+                EpOptOf::func(fn () => $this->origin->destination($request)),
+                new EpOptDefault($this->origin)
+            ),
+            new EpOptEmpty()
+        );
     }
 }

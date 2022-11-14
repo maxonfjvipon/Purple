@@ -1,43 +1,36 @@
 <?php
 
-namespace Purple\Response\Headers;
+namespace Maxonfjvipon\Purple\Response\Headers;
 
 use Exception;
-use Maxonfjvipon\Elegant_Elephant\Arrayable;
-use Maxonfjvipon\Elegant_Elephant\Arrayable\ArrFromCallback;
-use Maxonfjvipon\Elegant_Elephant\Arrayable\ArrSticky;
-use Maxonfjvipon\Elegant_Elephant\Arrayable\CountArrayable;
-use Maxonfjvipon\Elegant_Elephant\Arrayable\HasArrayableIterator;
-use Maxonfjvipon\Elegant_Elephant\Scalar\CastMixed;
+use Maxonfjvipon\ElegantElephant\Arr;
+use Maxonfjvipon\ElegantElephant\Arr\ArrOf;
+use Maxonfjvipon\ElegantElephant\Arr\ArrSticky;
 
 /**
  * Response headers.
  */
 final class RsHeaders implements ResponseHeaders
 {
-    use CountArrayable;
-    use HasArrayableIterator;
-    use CastMixed;
-
     /**
-     * @var Arrayable $self
+     * @var Arr $self
      */
-    private Arrayable $self;
+    private Arr $self;
 
     /**
      * Ctor.
      *
-     * @param array|Arrayable $headers
+     * @param array|Arr $headers
      */
-    public function __construct($headers)
+    public function __construct(array|Arr $headers)
     {
         $this->self = new ArrSticky(
-            new ArrFromCallback(fn () => $headers)
+            ArrOf::func(fn () => $headers)
         );
     }
 
     /**
-     * @return array<mixed>
+     * @return array
      * @throws Exception
      */
     public function asArray(): array
@@ -46,12 +39,12 @@ final class RsHeaders implements ResponseHeaders
     }
 
     /**
-     * @param string $key
+     * @param string $name
      * @return mixed
      * @throws Exception
      */
-    public function header(string $key)
+    public function get(string $name): mixed
     {
-        return $this->self->asArray()[$key];
+        return $this->self->asArray()[$name];
     }
 }

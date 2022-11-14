@@ -1,16 +1,17 @@
 <?php
 
-namespace Purple\Request;
+namespace Maxonfjvipon\Purple\Request;
 
-use Maxonfjvipon\Elegant_Elephant\Text;
+use Maxonfjvipon\ElegantElephant\Txt;
 
 /**
  * Request line.
  * {METHOD} {URI} HTTP/1.1
  */
-interface RequestLine extends Text
+interface RequestLine extends Txt
 {
     public const METHOD = "REQUEST_METHOD";
+    public const PROTOCOL_VERSION = 'SERVER_PROTOCOL';
 
     /**
      * @return string request method
@@ -21,4 +22,9 @@ interface RequestLine extends Text
      * @return RequestUri request uri
      */
     public function uri(): RequestUri;
+
+    /**
+     * @return string request http version
+     */
+    public function protocolVersion(): string;
 }

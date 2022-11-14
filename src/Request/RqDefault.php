@@ -1,141 +1,44 @@
 <?php
 
-namespace Purple\Request;
-
-use Exception;
-use Maxonfjvipon\Elegant_Elephant\Arrayable\ArrMerged;
-use Purple\Headers;
-use Purple\Response\Headers\RsHdsWith;
+namespace Maxonfjvipon\Purple\Request;
 
 /**
- * Live request.
+ * Default request from globals.
  */
-final class RqDefault implements Request
+final class RqDefault extends RqWrap
 {
     /**
-     * @var array<array<mixed>> $self
-     */
-    private array $self;
-
-    /**
-     * @var RequestHeaders $headers
-     */
-    private RequestHeaders $headers;
-
-    /**
-     * @var RequestLine $line
-     */
-    private RequestLine $line;
-
-    /**
-     * @var RequestBody $body
-     */
-    private RequestBody $body;
-
-    /**
-     * Ctor wrap.
-     *
-     * @return $this
-     */
-    public static function new(): self
-    {
-        return new self(
-            [
-                'SERVER' => $_SERVER,
-                'REQUEST' => $_REQUEST,
-                'FILES' => $_FILES,
-                'USER' => ''
-            ],
-            new RqLine(
-                $_SERVER[RequestLine::METHOD],
-                new RqUri([
-                    RequestUri::PROTOCOL => $_SERVER[RequestUri::PROTOCOL] ?? 'http',
-                    RequestUri::HOST => $_SERVER[RequestUri::HOST],
-                    RequestUri::URI => $_SERVER[RequestUri::URI],
-                    RequestUri::QUERY => $_SERVER[RequestUri::QUERY],
-                ])
-            ),
-            new RqHeaders([
-                'HTTP_ACCEPT' => $_SERVER['HTTP_ACCEPT'],
-                'HTTP_ACCEPT_CHARSET' => $_SERVER['HTTP_ACCEPT_CHARSET'] ?? 'iso-8859-1,*,utf-8',
-                'HTTP_ACCEPT_ENCODING' => $_SERVER['HTTP_ACCEPT_ENCODING'],
-                'HTTP_ACCEPT_LANGUAGE' => $_SERVER['HTTP_ACCEPT_LANGUAGE'],
-                'HTTP_CONNECTION' => $_SERVER['HTTP_CONNECTION'],
-                'HTTP_HOST' => $_SERVER['HTTP_HOST'],
-                'HTTP_REFERER' => $_SERVER['HTTP_REFERER'] ?? '',
-                'HTTP_USER_AGENT' => $_SERVER['HTTP_USER_AGENT'],
-            ]),
-            new RqBody($_REQUEST)
-        );
-    }
-
-    /**
      * Ctor.
-     *
-     * @param array $self
-     * @param RequestHeaders $headers
-     * @param RqLine $line
-     * @param RequestBody $body
      */
-    private function __construct(array $self, RqLine $line, RequestHeaders $headers, RequestBody $body)
+    public function __construct()
     {
-        $this->self = $self;
-        $this->headers = $headers;
-        $this->line = $line;
-        $this->body = $body;
-    }
-
-    /**
-     * @return RequestLine
-     */
-    public function line(): RequestLine
-    {
-        return $this->line;
-    }
-
-    /**
-     * @return RequestHeaders
-     */
-    public function headers(): RequestHeaders
-    {
-        return $this->headers;
-    }
-
-    /**
-     * @return RequestBody
-     */
-    public function body(): RequestBody
-    {
-        return $this->body;
-    }
-
-    /**
-     * @param string $name
-     * @param mixed $value
-     * @return self
-     * @throws Exception
-     */
-    public function with(string $name, $value): self
-    {
-        return new self(
-            $this->self,
-            $this->line,
-            new RqHeaders(
-                array_merge(
-                    $this->headers->asArray(),
-                    [$name => $value]
-                )
-            ),
-            $this->body
+        parent::__construct(
+            new RequestOf(
+                new RqLine(
+                    $_SERVER[RequestLine::METHOD],
+                    new RqUri([
+                        RequestUri::PROTOCOL => $_SERVER[RequestUri::PROTOCOL] ?? 'http',
+                        RequestUri::HOST => $_SERVER[RequestUri::HOST],
+                        RequestUri::URI => $_SERVER[RequestUri::URI],
+                        RequestUri::QUERY => $_SERVER[RequestUri::QUERY],
+                    ]),
+                    $_SERVER[RequestLine::PROTOCOL_VERSION]
+                ),
+                new RqHeaders([
+                    RequestHeaders::HTTP_ACCEPT => $_SERVER[RequestHeaders::HTTP_ACCEPT],
+                    RequestHeaders::HTTP_ACCEPT_CHARSET => $_SERVER[RequestHeaders::HTTP_ACCEPT_CHARSET] ?? 'iso-8859-1,*,utf-8',
+                    RequestHeaders::HTTP_ACCEPT_ENCODING => $_SERVER[RequestHeaders::HTTP_ACCEPT_ENCODING],
+                    RequestHeaders::HTTP_ACCEPT_LANGUAGE => $_SERVER[RequestHeaders::HTTP_ACCEPT_LANGUAGE],
+                    RequestHeaders::HTTP_CONNECTION => $_SERVER[RequestHeaders::HTTP_CONNECTION],
+                    RequestHeaders::HTTP_HOST => $_SERVER[RequestHeaders::HTTP_HOST],
+                    RequestHeaders::HTTP_REFERER => $_SERVER[RequestHeaders::HTTP_REFERER] ?? '',
+                    RequestHeaders::HTTP_USER_AGENT => $_SERVER[RequestHeaders::HTTP_USER_AGENT],
+                ]),
+                new RqBody($_REQUEST),
+                new RqCookie($_COOKIE),
+                new RqFiles($_FILES),
+            )
         );
     }
 
-    /**
-     * @param $name
-     * @return mixed
-     */
-    public function __get($name)
-    {
-        return $this->body()->param($name);
-    }
 }

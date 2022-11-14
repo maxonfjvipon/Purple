@@ -1,19 +1,16 @@
 <?php
 
-namespace Purple\Response;
+namespace Maxonfjvipon\Purple\Response;
 
 use Exception;
-use Maxonfjvipon\Elegant_Elephant\Scalar\CastMixed;
-use Purple\Response\Headers\ResponseHeaders;
-use Purple\Support\HttpStatus;
+use Maxonfjvipon\Purple\Response\Headers\ResponseHeaders;
+use Maxonfjvipon\Purple\Support\HttpStatus;
 
 /**
  * Response with status.
  */
-final class RsWithStatus extends RsEnvelope
+final class RsWithStatus extends RsWrap
 {
-    use CastMixed;
-
     /**
      * Ctor wrap.
      *
@@ -55,7 +52,6 @@ final class RsWithStatus extends RsEnvelope
         return self::REASONS[$code] ?? "Unknown";
     }
 
-    /** @var array<string, string> REASONS */
     private const REASONS = [
         HttpStatus::HTTP_OK => "OK",
         HttpStatus::SEE_OTHER => "See Other",

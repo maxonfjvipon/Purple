@@ -1,18 +1,14 @@
 <?php
 
-namespace Purple\Response\Headers;
+namespace Maxonfjvipon\Purple\Response\Headers;
 
-use Maxonfjvipon\Elegant_Elephant\Arrayable\ArrFromCallback;
-use Maxonfjvipon\Elegant_Elephant\Arrayable\ArrMerged;
-use Maxonfjvipon\Elegant_Elephant\Scalar\CastMixed;
+use Maxonfjvipon\ElegantElephant\Arr\ArrWith;
 
 /**
  * Response headers with.
  */
-final class RsHdsWith extends RsHdsEnvelope
+final class RsHdsWith extends RsHdsWrap
 {
-    use CastMixed;
-
     /**
      * Ctor.
      *
@@ -20,15 +16,14 @@ final class RsHdsWith extends RsHdsEnvelope
      * @param string $name
      * @param mixed $value
      */
-    public function __construct(ResponseHeaders $headers, string $name, $value)
+    public function __construct(ResponseHeaders $headers, string $name, mixed $value)
     {
         parent::__construct(
             new RsHeaders(
-                new ArrMerged(
+                new ArrWith(
                     $headers,
-                    new ArrFromCallback(
-                        fn () => [$name => $this->mixedCast($value)]
-                    )
+                    $name,
+                    $value
                 )
             )
         );

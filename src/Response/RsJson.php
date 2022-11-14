@@ -1,33 +1,28 @@
 <?php
 
-namespace Purple\Response;
+namespace Maxonfjvipon\Purple\Response;
 
 use Exception;
-use Maxonfjvipon\Elegant_Elephant\Arrayable;
-use Maxonfjvipon\Elegant_Elephant\Boolean;
-use Maxonfjvipon\Elegant_Elephant\Number;
-use Maxonfjvipon\Elegant_Elephant\Scalar;
-use Maxonfjvipon\Elegant_Elephant\Text;
-use Maxonfjvipon\Elegant_Elephant\Text\TxtJsonEncoded;
-use Purple\Response\Body\RsBody;
-use Purple\Support\ContentType;
+use Maxonfjvipon\ElegantElephant\Txt\TxtJsonEncoded;
+use Maxonfjvipon\Purple\Response\Body\RsBodyOf;
+use Maxonfjvipon\Purple\Support\ContentType;
 
 /**
  * JSON response.
  */
-final class RsJson extends RsEnvelope
+final class RsJson extends RsWrap
 {
     /**
-     * @param string|int|float|array<mixed>|bool|Text|Number|Arrayable|Boolean|Scalar $json
+     * @param mixed $json
      * @throws Exception
      */
-    public function __construct($json)
+    public function __construct(mixed $json)
     {
         parent::__construct(
             new RsWithType(
                 new RsWithBody(
                     new RsEmptyOK(),
-                    RsBody::ofText(
+                    RsBodyOf::text(
                         new TxtJsonEncoded($json)
                     )
                 ),

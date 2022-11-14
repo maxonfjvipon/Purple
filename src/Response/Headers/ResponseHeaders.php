@@ -1,8 +1,8 @@
 <?php
 
-namespace Purple\Response\Headers;
+namespace Maxonfjvipon\Purple\Response\Headers;
 
-use Purple\Headers;
+use Maxonfjvipon\Purple\Headers;
 
 /**
  * Response headers.

@@ -1,23 +1,24 @@
 <?php
 
-namespace Purple\Support\Traits;
+namespace Maxonfjvipon\Purple\Support\Traits;
 
-use Maxonfjvipon\Elegant_Elephant\Arrayable;
-use Maxonfjvipon\Elegant_Elephant\Arrayable\ArrExploded;
-use Maxonfjvipon\Elegant_Elephant\Arrayable\ArrMapped;
-use Maxonfjvipon\Elegant_Elephant\Arrayable\ArrMerged;
-use Maxonfjvipon\Elegant_Elephant\Arrayable\ArrSticky;
-use Maxonfjvipon\Elegant_Elephant\Boolean\PregMatch;
-use Maxonfjvipon\Elegant_Elephant\Text\TxtIf;
-use Maxonfjvipon\Elegant_Elephant\Text\TxtImploded;
-use Maxonfjvipon\Elegant_Elephant\Text\TxtJoined;
-use Maxonfjvipon\Elegant_Elephant\Text\TxtPregReplaced;
-use Purple\Endpoint\Endpoint;
-use Purple\Endpoint\OptionalEndpoint;
-use Purple\Request\Request;
-use Purple\Request\RequestHeaders;
-use Purple\Route\Route;
-use Purple\Route\RtIf;
+use Maxonfjvipon\ElegantElephant\Arr;
+use Maxonfjvipon\ElegantElephant\Arr\ArrMapped;
+use Maxonfjvipon\ElegantElephant\Arr\ArrMerged;
+use Maxonfjvipon\ElegantElephant\Arr\ArrSplit;
+use Maxonfjvipon\ElegantElephant\Arr\ArrSticky;
+use Maxonfjvipon\ElegantElephant\Logic\PregMatch;
+use Maxonfjvipon\ElegantElephant\Txt\TxtIf;
+use Maxonfjvipon\ElegantElephant\Txt\TxtImploded;
+use Maxonfjvipon\ElegantElephant\Txt\TxtJoined;
+use Maxonfjvipon\ElegantElephant\Txt\TxtPregReplaced;
+use Maxonfjvipon\Purple\Endpoint\Endpoint;
+use Maxonfjvipon\Purple\Endpoint\OptionalEndpoint;
+use Maxonfjvipon\Purple\Request\Request;
+use Maxonfjvipon\Purple\Request\RequestHeaders;
+use Maxonfjvipon\Purple\Request\RqWithHeader;
+use Maxonfjvipon\Purple\Route\Route;
+use Maxonfjvipon\Purple\Route\RtIf;
 
 /**
  * Route can handle prefixes in URI.
@@ -26,20 +27,24 @@ trait HandlePrefixes
 {
     /**
      * @param string $prefix
-     * @param Route|Endpoint $origin
+     * @param Endpoint|Route $origin
      * @param bool $final
      * @return Route
      */
-    private static function routeWithPrefix(string $prefix, $origin, bool $final): Route
+    private function routeWithPrefix(
+        string $prefix,
+        Endpoint|Route $origin,
+        bool $final
+    ): Route
     {
         return new class ($prefix, $origin, $final) implements Route {
 
             use TrimUri;
 
             /**
-             * @var Route $route
+             * @var array $cache
              */
-            private Route $route;
+            private array $cache = [];
 
             /**
              * @var callable $getPrefixes
@@ -47,9 +52,9 @@ trait HandlePrefixes
             private $getPrefixes;
 
             /**
-             * @var array $cache
+             * @var Route $route
              */
-            private array $cache = [];
+            private Route $route;
 
             /**
              * Ctor.
@@ -58,36 +63,39 @@ trait HandlePrefixes
              * @param Route|Endpoint $origin
              * @param bool $final
              */
-            public function __construct(string $prefix, $origin, bool $final)
+            public function __construct(
+                string $prefix,
+                Endpoint|Route $origin,
+                bool $final
+            )
             {
-                $this->getPrefixes = fn (Request $request) => $this->cache[0] ??= new ArrSticky(
+                $this->getPrefixes = $getPrefixes = fn (Request $request) => $this->cache[0] ??= new ArrSticky(
                     new ArrMerged(
-                        $request->headers()->header(RequestHeaders::ROUTE_PREFIXES) ?? [],
+                        $request->headers()->get(RequestHeaders::X_ROUTE_PREFIXES), // fixme
                         new ArrMapped(
-                            new ArrExploded("/", $this->trimUri($prefix)),
+                            new ArrSplit("/", $this->trimUri($prefix)),
                             fn (string $prefix) => trim($prefix)
                         )
                     )
                 );
                 $this->route = new RtIf(
-                    $origin,
-                    fn (Request $request, callable $getPrefixes) => new PregMatch(
-                        new TxtJoined(
+                    fn (Request $request) => new PregMatch(
+                        new TxtJoined([
                             '/^\/',
                             new TxtPregReplaced(
                                 ["/{[0-9a-z_]+}/", "/\//"],
                                 ['[0-9a-z_]+', '\/'],
-                                new TxtImploded("/", ...$getPrefixes($request)->asArray())
+                                new TxtImploded("/", ...$getPrefixes($request))
                             ),
                             new TxtIf(
                                 !$final,
                                 '.*'
                             ),
                             '$/'
-                        ),
+                        ]),
                         $request->line()->uri()->path()
                     ),
-                    $this->getPrefixes
+                    $origin
                 );
             }
 
@@ -97,10 +105,16 @@ trait HandlePrefixes
              */
             public function destination(Request $request): OptionalEndpoint
             {
-                /** @var Arrayable<string> $prefixes */
+                /** @var Arr $prefixes */
                 $prefixes = call_user_func($this->getPrefixes, $request);
 
-                return $this->route->destination($request->with(RequestHeaders::ROUTE_PREFIXES, $prefixes->asArray()));
+                return $this->route->destination(
+                    new RqWithHeader(
+                        $request,
+                        RequestHeaders::X_ROUTE_PREFIXES,
+                        $prefixes
+                    )
+                );
             }
         };
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Purple\Endpoint;
+namespace Maxonfjvipon\Purple\Endpoint;
 
 /**
  * Default optional endpoint.
@@ -8,18 +8,12 @@ namespace Purple\Endpoint;
 final class EpOptDefault implements OptionalEndpoint
 {
     /**
-     * @var Endpoint $origin
-     */
-    private Endpoint $origin;
-
-    /**
      * Ctor.
      *
      * @param Endpoint $endpoint
      */
-    public function __construct(Endpoint $endpoint)
+    public function __construct(private Endpoint $endpoint)
     {
-        $this->origin = $endpoint;
     }
 
     /**
@@ -27,7 +21,7 @@ final class EpOptDefault implements OptionalEndpoint
      */
     public function origin(): Endpoint
     {
-        return $this->origin;
+        return $this->endpoint;
     }
 
     /**

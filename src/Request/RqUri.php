@@ -1,16 +1,12 @@
 <?php
 
-namespace Purple\Request;
-
-use Maxonfjvipon\Elegant_Elephant\Text\StringableText;
+namespace Maxonfjvipon\Purple\Request;
 
 /**
  * Request URI.
  */
 final class RqUri implements RequestUri
 {
-    use StringableText;
-
     /**
      * @var array<string, string> $self
      */

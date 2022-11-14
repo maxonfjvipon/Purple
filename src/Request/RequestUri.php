@@ -1,14 +1,14 @@
 <?php
 
-namespace Purple\Request;
+namespace Maxonfjvipon\Purple\Request;
 
-use Maxonfjvipon\Elegant_Elephant\Text;
+use Maxonfjvipon\ElegantElephant\Txt;
 
 /**
  * Request URI.
  * {PROTOCOL}://{HOST}{URI}
  */
-interface RequestUri extends Text
+interface RequestUri extends Txt
 {
     public const PROTOCOL = 'REQUEST_SCHEME';
     public const HOST = 'HTTP_HOST';

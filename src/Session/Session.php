@@ -1,6 +1,6 @@
 <?php
 
-namespace Purple\Session;
+namespace Maxonfjvipon\Purple\Session;
 
 use Exception;
 

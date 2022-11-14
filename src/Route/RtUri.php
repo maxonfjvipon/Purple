@@ -1,14 +1,14 @@
 <?php
 
-namespace Purple\Route;
+namespace Maxonfjvipon\Purple\Route;
 
-use Purple\Endpoint\Endpoint;
-use Purple\Support\Traits\HandlePrefixes;
+use Maxonfjvipon\Purple\Endpoint\Endpoint;
+use Maxonfjvipon\Purple\Support\Traits\HandlePrefixes;
 
 /**
  * Route by URI.
  */
-final class RtUri extends RtEnvelope
+final class RtUri extends RtWrap
 {
     use HandlePrefixes;
 
@@ -21,7 +21,7 @@ final class RtUri extends RtEnvelope
     public function __construct(string $uri, Endpoint $endpoint)
     {
         parent::__construct(
-            self::routeWithPrefix($uri, $endpoint, true)
+            $this->routeWithPrefix($uri, $endpoint, final: true)
         );
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Purple\Endpoint;
+namespace Maxonfjvipon\Purple\Endpoint;
 
 use Exception;
 

@@ -1,48 +1,50 @@
 <?php
 
-namespace Purple\Request;
+namespace Maxonfjvipon\Purple\Request;
 
-use Maxonfjvipon\Elegant_Elephant\Arrayable\CountArrayable;
-use Maxonfjvipon\Elegant_Elephant\Arrayable\HasArrayableIterator;
+use Exception;
+use Maxonfjvipon\ElegantElephant\Arr;
+use Maxonfjvipon\ElegantElephant\Arr\ArrOf;
+use Maxonfjvipon\ElegantElephant\Arr\ArrSticky;
 
 /**
  * Request headers.
  */
 final class RqHeaders implements RequestHeaders
 {
-    use HasArrayableIterator;
-    use CountArrayable;
-
     /**
-     * @var array $self
+     * @var Arr $self
      */
-    private array $self;
+    private Arr $self;
 
     /**
      * Ctor.
      *
-     * @param array $headers
+     * @param array|Arr $headers
      */
-    public function __construct(array $headers)
+    public function __construct(array|Arr $headers)
     {
-        $this->self = $headers;
+        $this->self = new ArrSticky(
+            ArrOf::func(fn () => $headers)
+        );
     }
 
     /**
-     * @return array<mixed>
+     * @return array
+     * @throws Exception
      */
     public function asArray(): array
     {
-        return $this->self;
+        return $this->self->asArray();
     }
 
     /**
-     * @todo: remove null
-     * @param string $key
+     * @param string $name
      * @return mixed
+     * @throws Exception
      */
-    public function header(string $key)
+    public function get(string $name): mixed
     {
-        return $this->self[$key] ?? null;
+        return $this->asArray()[$name];
     }
 }

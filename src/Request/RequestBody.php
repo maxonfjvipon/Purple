@@ -1,19 +1,14 @@
 <?php
 
-namespace Purple\Request;
+namespace Maxonfjvipon\Purple\Request;
 
-use Purple\Body;
+use Maxonfjvipon\ElegantElephant\Txt\StringableTxt;
+use Maxonfjvipon\Purple\Bag;
+use Maxonfjvipon\Purple\Body;
 
 /**
  * Request body.
  */
-interface RequestBody extends Body
+interface RequestBody extends Body, StringableTxt, Bag
 {
-    /**
-     * Get param from body.
-     *
-     * @param string $name
-     * @return mixed
-     */
-    public function param(string $name);
 }

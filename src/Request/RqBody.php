@@ -1,30 +1,23 @@
 <?php
 
-namespace Purple\Request;
+namespace Maxonfjvipon\Purple\Request;
 
-use Maxonfjvipon\Elegant_Elephant\Text\StringableText;
-use Maxonfjvipon\Elegant_Elephant\Text\TxtEnvelope;
+use Maxonfjvipon\ElegantElephant\Txt\TxtToString;
 
 /**
  * Request body.
  */
 final class RqBody implements RequestBody
 {
-    use StringableText;
-
-    /**
-     * @var array $self
-     */
-    private array $self;
+    use TxtToString;
 
     /**
      * Ctor.
      *
      * @param array $self
      */
-    public function __construct(array $self)
+    public function __construct(private array $self)
     {
-        $this->self = $self;
     }
 
     /**
@@ -43,7 +36,7 @@ final class RqBody implements RequestBody
      * @param string $name
      * @return mixed
      */
-    public function param(string $name)
+    public function get(string $name): mixed
     {
         return $this->self[$name];
     }

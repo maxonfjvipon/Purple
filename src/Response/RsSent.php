@@ -1,9 +1,9 @@
 <?php
 
-namespace Purple\Response;
+namespace Maxonfjvipon\Purple\Response;
 
 use Exception;
-use Purple\Response\Headers\ResponseHeaders;
+use Maxonfjvipon\Purple\Response\Headers\ResponseHeaders;
 
 /**
  * Response that can send an encapsulated one to the client.

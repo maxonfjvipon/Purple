@@ -1,17 +1,12 @@
 <?php
 
-namespace Purple;
+namespace Maxonfjvipon\Purple;
 
-use Maxonfjvipon\Elegant_Elephant\Arrayable;
+use Maxonfjvipon\ElegantElephant\Arr;
 
 /**
  * Headers.
  */
-interface Headers extends Arrayable
+interface Headers extends Arr, Bag
 {
-    /**
-     * @param string $key
-     * @return mixed
-     */
-    public function header(string $key);
 }

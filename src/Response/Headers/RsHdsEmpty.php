@@ -1,21 +1,19 @@
 <?php
 
-namespace Purple\Response\Headers;
+namespace Maxonfjvipon\Purple\Response\Headers;
 
 /**
  * Empty response headers.
  */
-final class RsHdsEmpty extends RsHdsEnvelope
+final class RsHdsEmpty extends RsHdsWrap
 {
-    private const SELf = [ResponseHeaders::STATUS => "HTTP/1.1 204 No Content"];
-
     /**
      * Ctor.
      */
     public function __construct()
     {
         parent::__construct(
-            new RsHeaders(self::SELf)
+            new RsHeaders([ResponseHeaders::STATUS => "HTTP/1.1 204 No Content"])
         );
     }
 }

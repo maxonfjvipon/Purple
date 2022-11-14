@@ -1,11 +1,11 @@
 <?php
 
-namespace Purple\Route;
+namespace Maxonfjvipon\Purple\Route;
 
 use Exception;
-use Purple\Endpoint\EpOptEmpty;
-use Purple\Endpoint\OptionalEndpoint;
-use Purple\Request\Request;
+use Maxonfjvipon\Purple\Endpoint\EpOptEmpty;
+use Maxonfjvipon\Purple\Endpoint\OptionalEndpoint;
+use Maxonfjvipon\Purple\Request\Request;
 
 /**
  * Routes.

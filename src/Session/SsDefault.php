@@ -1,25 +1,20 @@
 <?php
 
-namespace Purple\Session;
+namespace Maxonfjvipon\Purple\Session;
 
 use Exception;
 
-use Purple\Request\Request;
-use Purple\Request\RqDefault;
-use Purple\Response\ResponseSent;
-use Purple\Response\RsSent;
-use Purple\Route\Route;
+use Maxonfjvipon\Purple\Request\Request;
+use Maxonfjvipon\Purple\Request\RqDefault;
+use Maxonfjvipon\Purple\Response\ResponseSent;
+use Maxonfjvipon\Purple\Response\RsSent;
+use Maxonfjvipon\Purple\Route\Route;
 
 /**
  * The default session.
  */
 final class SsDefault implements Session
 {
-    /**
-     * @var Route $route
-     */
-    private Route $route;
-
     /**
      * @var Request $request
      */
@@ -35,10 +30,9 @@ final class SsDefault implements Session
      *
      * @param Route $route
      */
-    public function __construct(Route $route)
+    public function __construct(private Route $route)
     {
-        $this->route = $route;
-        $this->request = RqDefault::new();
+        $this->request = RqDefault::create();
         $this->response = new RsSent();
     }
 

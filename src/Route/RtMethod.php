@@ -1,13 +1,13 @@
 <?php
 
-namespace Purple\Route;
+namespace Maxonfjvipon\Purple\Route;
 
-use Purple\Request\Request;
+use Maxonfjvipon\Purple\Request\Request;
 
 /**
  * Route with method.
  */
-final class RtMethod extends RtEnvelope
+final class RtMethod extends RtWrap
 {
     /**
      * Ctor.
@@ -19,8 +19,8 @@ final class RtMethod extends RtEnvelope
     {
         parent::__construct(
             new RtIf(
+                fn (Request $request) => $method === $request->line()->method(),
                 $origin,
-                fn (Request $request) => $method === $request->line()->method()
             )
         );
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Purple;
+namespace Maxonfjvipon\Purple;
 
 /**
  * With headers.

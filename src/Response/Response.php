@@ -1,11 +1,11 @@
 <?php
 
-namespace Purple\Response;
+namespace Maxonfjvipon\Purple\Response;
 
-use Purple\Response\Body\ResponseBody;
-use Purple\Response\Headers\ResponseHeaders;
-use Purple\WithBody;
-use Purple\WithHeaders;
+use Maxonfjvipon\Purple\WithBody;
+use Maxonfjvipon\Purple\WithHeaders;
+use Maxonfjvipon\Purple\Response\Body\ResponseBody;
+use Maxonfjvipon\Purple\Response\Headers\ResponseHeaders;
 
 /**
  * The response.

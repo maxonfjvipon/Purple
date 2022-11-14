@@ -1,24 +1,24 @@
 <?php
 
-namespace Purple\Response;
+namespace Maxonfjvipon\Purple\Response;
 
 use Exception;
-use Maxonfjvipon\Elegant_Elephant\Text;
-use Purple\Response\Headers\ResponseHeaders;
-use Purple\Support\HttpStatus;
+use Maxonfjvipon\ElegantElephant\Txt;
+use Maxonfjvipon\Purple\Response\Headers\ResponseHeaders;
+use Maxonfjvipon\Purple\Support\HttpStatus;
 
 /**
  * Redirect response.
  */
-final class RsRedirect extends RsEnvelope
+final class RsRedirect extends RsWrap
 {
     /**
      * Ctor.
      *
-     * @param string|Text $location
+     * @param string|Txt $location
      * @throws Exception
      */
-    public function __construct($location)
+    public function __construct(string|Txt $location)
     {
         parent::__construct(
             new RsWithHeader(

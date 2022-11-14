@@ -1,28 +1,21 @@
 <?php
 
-namespace Purple\Route;
+namespace Maxonfjvipon\Purple\Route;
 
-use Purple\Endpoint\OptionalEndpoint;
-use Purple\Request\Request;
+use Maxonfjvipon\Purple\Endpoint\OptionalEndpoint;
+use Maxonfjvipon\Purple\Request\Request;
 
 /**
  * Route envelope.
  */
-class RtEnvelope implements Route
+class RtWrap implements Route
 {
     /**
-     * @var Route $origin
-     */
-    private Route $origin;
-
-    /**
      * Ctor.
-     *
      * @param Route $origin
      */
-    public function __construct(Route $origin)
+    public function __construct(private Route $origin)
     {
-        $this->origin = $origin;
     }
 
     /**

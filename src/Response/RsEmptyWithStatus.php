@@ -1,13 +1,13 @@
 <?php
 
-namespace Purple\Response;
+namespace Maxonfjvipon\Purple\Response;
 
 use Exception;
 
 /**
  * Empty response with given status code.
  */
-final class RsEmptyWithStatus extends RsEnvelope
+final class RsEmptyWithStatus extends RsWrap
 {
     /**
      * Ctor.

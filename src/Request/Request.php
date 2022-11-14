@@ -1,17 +1,23 @@
 <?php
 
-namespace Purple\Request;
+namespace Maxonfjvipon\Purple\Request;
 
 use Exception;
-use Purple\Headers;
-use Purple\WithBody;
-use Purple\WithHeaders;
+use Maxonfjvipon\Purple\WithBody;
+use Maxonfjvipon\Purple\WithHeaders;
 
 /**
  * The request.
  */
 interface Request extends WithHeaders, WithBody
 {
+    /**
+     * Get request line.
+     *
+     * @return RequestLine
+     */
+    public function line(): RequestLine;
+
     /**
      * Get request headers.
      *
@@ -27,27 +33,24 @@ interface Request extends WithHeaders, WithBody
     public function body(): RequestBody;
 
     /**
-     * Get request line.
+     * Get request cookie.
      *
-     * @return RequestLine
+     * @return RequestCookie
      */
-    public function line(): RequestLine;
+    public function cookie(): RequestCookie;
 
     /**
-     * Add new header to itself.
+     * Get request files
      *
-     * @param string $name
-     * @param mixed $value
-     * @return self
-     * @throws Exception
+     * @return RequestFiles
      */
-    public function with(string $name, $value): self;
+    public function files(): RequestFiles;
 
     /**
      * Get param from {@see RequestBody}
      *
-     * @param $name
+     * @param string $name
      * @return mixed
      */
-    public function __get($name);
+    public function __get(string $name);
 }

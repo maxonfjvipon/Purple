@@ -1,6 +1,6 @@
 <?php
 
-namespace Purple\Support;
+namespace Maxonfjvipon\Purple\Support;
 
 /**
  * HTTP status.

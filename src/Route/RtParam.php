@@ -1,44 +1,27 @@
 <?php
 
-namespace Purple\Route;
+namespace Maxonfjvipon\Purple\Route;
 
 use Exception;
-use Maxonfjvipon\Elegant_Elephant\Scalar\CastMixed;
-use Maxonfjvipon\Elegant_Elephant\Text;
-use Maxonfjvipon\Elegant_Elephant\Text\StringableText;
-use Purple\Request\Request;
-use Purple\Request\RequestHeaders;
-use Purple\Support\Traits\TrimUri;
+use Maxonfjvipon\ElegantElephant\Txt;
+use Maxonfjvipon\Purple\Request\Request;
+use Maxonfjvipon\Purple\Request\RequestHeaders;
+use Maxonfjvipon\Purple\Support\Traits\TrimUri;
 
 /**
  * Route param.
  */
-final class RtParam implements Text
+final class RtParam implements Txt
 {
     use TrimUri;
-    use CastMixed;
-    use StringableText;
-
-    /**
-     * @var Request $request
-     */
-    private Request $request;
-
-    /**
-     * @var string|Text $name
-     */
-    private $name;
 
     /**
      * Ctor.
-     *
      * @param Request $request
-     * @param string|Text $name
+     * @param string $name
      */
-    public function __construct(Request $request, $name)
+    public function __construct(private Request $request, private string $name)
     {
-        $this->request = $request;
-        $this->name = $name;
     }
 
     /**
@@ -47,16 +30,17 @@ final class RtParam implements Text
      */
     public function asString(): string
     {
-        $prefixes = $this->request->headers()->header(RequestHeaders::ROUTE_PREFIXES) ?? [];
+        $prefixes = $this->request->headers()->get(RequestHeaders::X_ROUTE_PREFIXES) ?? [];
+        $param = "";
 
         if (!empty($prefixes)) {
-            if (($key = array_search("{" . $this->mixedCast($this->name) . "}", $prefixes)) !== false) {
+            if (($key = array_search("{" . $this->name . "}", $prefixes)) !== false) {
                 $path = $this->request->line()->uri()->path();
 
-                return explode("/", $this->trimUri($path))[$key] ?? "";
+                $param = explode("/", $this->trimUri($path))[$key] ?? "";
             }
         }
 
-        return "";
+        return $param;
     }
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace Purple\Endpoint;
+namespace Maxonfjvipon\Purple\Endpoint;
 
 use Exception;
-use Purple\Request\Request;
-use Purple\Response\Response;
+use Maxonfjvipon\Purple\Request\Request;
+use Maxonfjvipon\Purple\Response\Response;
 
 /**
  * Endpoint.

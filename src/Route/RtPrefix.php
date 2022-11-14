@@ -1,13 +1,13 @@
 <?php
 
-namespace Purple\Route;
+namespace Maxonfjvipon\Purple\Route;
 
-use Purple\Support\Traits\HandlePrefixes;
+use Maxonfjvipon\Purple\Support\Traits\HandlePrefixes;
 
 /**
  * Route with prefix.
  */
-final class RtPrefix extends RtEnvelope
+final class RtPrefix extends RtWrap
 {
     use HandlePrefixes;
 
@@ -20,7 +20,7 @@ final class RtPrefix extends RtEnvelope
     public function __construct(string $prefix, Route $route)
     {
         parent::__construct(
-            self::routeWithPrefix($prefix, $route, false)
+            $this->routeWithPrefix($prefix, $route, final: false)
         );
     }
 }

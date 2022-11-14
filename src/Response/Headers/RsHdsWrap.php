@@ -1,19 +1,14 @@
 <?php
 
-namespace Purple\Response\Headers;
+namespace Maxonfjvipon\Purple\Response\Headers;
 
 use Exception;
-use Maxonfjvipon\Elegant_Elephant\Arrayable\CountArrayable;
-use Maxonfjvipon\Elegant_Elephant\Arrayable\HasArrayableIterator;
 
 /**
  * Response headers envelope.
  */
-class RsHdsEnvelope implements ResponseHeaders
+class RsHdsWrap implements ResponseHeaders
 {
-    use HasArrayableIterator;
-    use CountArrayable;
-
     /**
      * @var ResponseHeaders $origin
      */
@@ -30,7 +25,7 @@ class RsHdsEnvelope implements ResponseHeaders
     }
 
     /**
-     * @return array<mixed>
+     * @return array
      * @throws Exception
      */
     public function asArray(): array
@@ -39,11 +34,11 @@ class RsHdsEnvelope implements ResponseHeaders
     }
 
     /**
-     * @param string $key
+     * @param string $name
      * @return mixed
      */
-    public function header(string $key)
+    public function get(string $name): mixed
     {
-        return $this->origin->header($key);
+        return $this->origin->get($name);
     }
 }

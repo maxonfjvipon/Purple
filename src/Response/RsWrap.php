@@ -1,15 +1,14 @@
 <?php
 
-namespace Purple\Response;
+namespace Maxonfjvipon\Purple\Response;
 
-use Purple\Headers;
-use Purple\Response\Body\ResponseBody;
-use Purple\Response\Headers\ResponseHeaders;
+use Maxonfjvipon\Purple\Response\Body\ResponseBody;
+use Maxonfjvipon\Purple\Response\Headers\ResponseHeaders;
 
 /**
  * Response envelope.
  */
-class RsEnvelope implements Response
+class RsWrap implements Response
 {
     /**
      * @var Response $origin

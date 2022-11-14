@@ -1,12 +1,11 @@
 <?php
 
-namespace Purple\Response;
+namespace Maxonfjvipon\Purple\Response;
 
-use Purple\Headers;
-use Purple\Response\Body\ResponseBody;
-use Purple\Response\Body\RsBodyEmpty;
-use Purple\Response\Headers\ResponseHeaders;
-use Purple\Response\Headers\RsHdsEmpty;
+use Maxonfjvipon\Purple\Response\Body\ResponseBody;
+use Maxonfjvipon\Purple\Response\Body\RsBodyEmpty;
+use Maxonfjvipon\Purple\Response\Headers\ResponseHeaders;
+use Maxonfjvipon\Purple\Response\Headers\RsHdsEmpty;
 
 /**
  * Empty response.
